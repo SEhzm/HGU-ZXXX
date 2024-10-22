@@ -34,27 +34,33 @@ jobs:
         run: |
           git config --global user.name 'SEhzm'
           git config --global user.email '2693445032@qq.com'
-          cd ruoyi-ui
-
-          # 初始化本地 git 仓库
-          git init
-          git remote add origin https://github.com/SEhzm/HGU-ZXXX.git
-          git fetch origin
-
-          # 检查 gh-pages 分支是否存在
-          if git rev-parse --verify origin/gh-pages; then
-            git checkout gh-pages
-          else
-            git checkout --orphan gh-pages
-          fi
-
-          # 删除 gh-pages 分支中的 assets 文件夹
-          rm -rf ./assets
-
-          # 将编译后的文件从 dist 文件夹复制到当前目录
-          cp -r ./dist/* .
-
-          # 提交并推送更新到 gh-pages 分支
+          
+          # 克隆 gh-pages 分支到本地
+          git clone https://sehzm:${{ secrets.ACCESS_TOKEN }}@github.com/SEhzm/HGU-ZXXX.git gh-pages-repo
+          cd gh-pages-repo
+          
+          # 切换到 gh-pages 分支
+          git checkout gh-pages
+          
+          # 删除旧的 assets 文件夹，但保留 CNAME 文件
+          rm -rf assets/
+          
+          # 创建一个临时分支用于更新打包文件
+          git checkout -b temp-branch
+          
+          # 将打包文件从 dist 复制到临时分支
+          cp -r ../ruoyi-ui/dist/* .
+          
+          # 提交更新
           git add .
           git commit -m "自动部署: 更新打包文件，删除旧的 assets 文件夹"
-          git push -f https://x-access-token:${{ secrets.ACCESS_TOKEN }}@github.com/SEhzm/HGU-ZXXX.git gh-pages
+          
+          # 切换回 gh-pages 分支并合并临时分支
+          git checkout gh-pages
+          git merge temp-branch --no-edit
+          
+          # 推送合并后的 gh-pages 分支
+          git push https://sehzm:${{ secrets.ACCESS_TOKEN }}@github.com/SEhzm/HGU-ZXXX.git gh-pages
+          
+          # 删除临时分支
+          git branch -d temp-branch

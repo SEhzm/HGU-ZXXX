@@ -21,7 +21,7 @@ jobs:
       - name: 进入 ruoyi-ui 目录
         run: cd ruoyi-ui
 
-      - name: 安装依赖1
+      - name: 安装依赖
         run: npm install --verbose
         working-directory: ruoyi-ui
 
@@ -46,7 +46,7 @@ jobs:
           git checkout -b temp-branch
           
           # 将打包文件复制到临时分支
-          cp -r ../../ruoyi-ui/dist/* .
+          cp -r ./dist/* .
           git add .
           git commit -m "自动部署: 更新打包文件"
           

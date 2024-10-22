@@ -44,10 +44,10 @@ jobs:
             git branch -D master  # 删除 master 分支，避免冲突
           fi
           # 删除原有的 assets 文件夹
-          rm -rf assets
+          rm -rf assets/
 
           # 将编译后的文件复制到当前目录
-          cp -R dist/* .
+          cp -R ../dist/* .
 
           # 提交并推送更改
           git add .

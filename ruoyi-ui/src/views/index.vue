@@ -52,15 +52,13 @@
         <p>
           <el-button
             type="primary"
-            size="mini"
-            icon="el-icon-cloudy"
+            icon="Cloudy"
             plain
             @click="goTarget('https://gitee.com/y_project/RuoYi-Vue')"
             >访问码云</el-button
           >
           <el-button
-            size="mini"
-            icon="el-icon-s-home"
+            icon="HomeFilled"
             plain
             @click="goTarget('http://ruoyi.vip')"
             >访问主页</el-button
@@ -106,9 +104,11 @@
     <el-row :gutter="20">
       <el-col :xs="24" :sm="24" :md="12" :lg="8">
         <el-card class="update-log">
-          <div slot="header" class="clearfix">
-            <span>联系信息</span>
-          </div>
+          <template v-slot:header>
+            <div class="clearfix">
+              <span>联系信息</span>
+            </div>
+          </template>
           <div class="body">
             <p>
               <i class="el-icon-s-promotion"></i> 官网：<el-link
@@ -143,9 +143,11 @@
       </el-col>
       <el-col :xs="24" :sm="24" :md="12" :lg="8">
         <el-card class="update-log">
-          <div slot="header" class="clearfix">
-            <span>更新日志</span>
-          </div>
+          <template v-slot:header>
+            <div class="clearfix">
+              <span>更新日志</span>
+            </div>
+          </template>
           <el-collapse accordion>
             <el-collapse-item title="v3.8.8 - 2024-06-30">
               <ol>
@@ -995,14 +997,16 @@
       </el-col>
       <el-col :xs="24" :sm="24" :md="12" :lg="8">
         <el-card class="update-log">
-          <div slot="header" class="clearfix">
-            <span>捐赠支持</span>
-          </div>
+          <template v-slot:header>
+            <div class="clearfix">
+              <span>捐赠支持</span>
+            </div>
+          </template>
           <div class="body">
             <img
               src="@/assets/images/pay.png"
               alt="donate"
-              width="100%"
+              style="width:100%"
             />
             <span style="display: inline-block; height: 30px; line-height: 30px"
               >你可以请作者喝杯咖啡表示鼓励</span
@@ -1014,21 +1018,12 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "Index",
-  data() {
-    return {
-      // 版本号
-      version: "3.8.8"
-    };
-  },
-  methods: {
-    goTarget(href) {
-      window.open(href, "_blank");
-    }
-  }
-};
+<script setup name="Index">
+const version = ref('3.8.8')
+
+function goTarget(url) {
+  window.open(url, '__blank')
+}
 </script>
 
 <style scoped lang="scss">

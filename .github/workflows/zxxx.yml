@@ -28,7 +28,8 @@ jobs:
         run: ls -la ./dist  # 如果输出目录是 dist，可以用此步骤确认打包文件
 
       - name: 部署到 HGU-ZXXX 的 gh-pages 分支
-        run: |          git config --global user.name 'SEhzm'
+        run: |          
+          git config --global user.name 'SEhzm'
           git config --global user.email '2693445032@qq.com'
           git clone https://sehzm:${{ secrets.ACCESS_TOKEN }}@github.com/SEhzm/HGU-ZXXX.git hgu-zxxx
           cd hgu-zxxx

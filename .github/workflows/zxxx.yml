@@ -35,15 +35,15 @@ jobs:
           git config --global user.name 'SEhzm'
           git config --global user.email '2693445032@qq.com'
           
-          # 克隆 gh-pages 分支到本地
+          # 克隆 gh-pages 分支，如果不存在则创建它
           git clone https://sehzm:${{ secrets.ACCESS_TOKEN }}@github.com/SEhzm/HGU-ZXXX.git gh-pages-repo
           cd gh-pages-repo
           
-          # 检查 gh-pages 分支是否存在
-          if git rev-parse --verify origin/gh-pages; then
+          # 检查是否存在 gh-pages 分支
+          if git show-ref --quiet refs/heads/gh-pages; then
             git checkout gh-pages
           else
-            git checkout --orphan gh-pages
+            git checkout --orphan gh-pages  # 创建空的 gh-pages 分支
           fi
           
           # 删除旧的 assets 文件夹，但保留 CNAME 文件

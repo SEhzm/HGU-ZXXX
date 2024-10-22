@@ -1,5 +1,7 @@
 name: 自动化打包，部署vue项目到gh-pages分支
-on: push
+
+on:
+  push:
 
 permissions:
   contents: write
@@ -10,45 +12,45 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: 读取仓库
+        uses: actions/checkout@v4
+
+      - name: 设置 Node.js
+        uses: actions/setup-node@v4
         with:
-          fetch-depth: 0  # 确保完整的 Git 历史被克隆，以便可以删除文件夹
+          node-version: '20.x'  # 根据项目需求选择合适版本
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '20.x'  # 请根据你的项目需要修改 Node.js 版本
-
-      - name: Install dependencies
+      - name: 安装依赖
+        run: npm install --verbose
         working-directory: ruoyi-ui
-        run: npm install
 
-      - name: Build project
-        working-directory: ruoyi-ui
+      - name: 打包项目
         run: npm run build:prod
+        working-directory: ruoyi-ui
 
       - name: 检查打包输出
         run: ls -la ./dist
         working-directory: ruoyi-ui
 
-      - name: Remove assets folder from gh-pages
+      - name: 部署到 gh-pages
         run: |
           git config --global user.name "SEhzm"
-          git config --global user.email "2639445032@qq.com"
-          if git show-ref --verify --quiet refs/heads/gh-pages; then
-            git checkout gh-pages  # 如果存在，切换到 gh-pages 分支
-          else
-            git checkout --orphan gh-pages  # 如果不存在，创建一个新的 gh-pages 分支
-            git rm -rf .  # 删除所有现有文件
-          fi
-          rm -rf assets  # 删除 assets 文件夹
-          git add -A  # 添加所有变更
-          git commit -m "Remove assets folder" || echo "No changes to commit"  # 如果没有变更则忽略错误
+          git config --global user.email "2693445032@qq.com" # 请替换为你的邮箱
+          # 检查 gh-pages 分支是否存在，如果不存在则创建
+          git fetch origin gh-pages || git checkout --orphan gh-pages
+          # 切换到 gh-pages 分支
+          git fetch origin gh-pages
+          git checkout gh-pages
 
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4.0.0
-        with:
-          branch: gh-pages
-          folder: ruoyi-ui/dist  # 修改为你的构建输出目录
-          token: ${{ secrets.GITHUB_TOKEN }}  # GitHub Actions 自动提供的令牌
+          # 删除原有的 assets 文件夹
+          rm -rf assets
+
+          # 将编译后的文件复制到当前目录
+          cp -R dist/* .
+
+          # 提交并推送更改
+          git add .
+          git commit -m "Deploy Vue project to gh-pages"
+          git push origin gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}  # GitHub Actions 自动提供的 token

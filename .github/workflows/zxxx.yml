@@ -23,6 +23,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # 删除 assets 文件夹
+      - name: Remove assets folder
+        run: rm -rf ./ruoyi-ui/dist/assets
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -37,26 +41,8 @@ jobs:
         working-directory: ruoyi-ui
 
       - name: Check build output
-        run: |
-          ls -la ./dist
-          pwd
+        run: ls -la ./dist
         working-directory: ruoyi-ui
-
-      # 检查 gh-pages 分支是否存在
-      - name: Check if gh-pages branch exists
-        id: check_branch
-        run: |
-          git ls-remote --heads origin gh-pages
-          if [ $? -eq 0 ]; then
-            echo "::set-output name=branch_exists::true"
-          else
-            echo "::set-output name=branch_exists::false"
-          fi
-
-      # 如果 gh-pages 分支存在，则删除 assets 文件夹
-      - name: Remove assets folder
-        if: steps.check_branch.outputs.branch_exists == 'true'
-        run: rm -rf ./ruoyi-ui/dist/assets
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4

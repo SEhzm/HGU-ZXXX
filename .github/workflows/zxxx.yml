@@ -36,21 +36,25 @@ jobs:
           git config --global user.email '2693445032@qq.com'
           cd ruoyi-ui
 
-          # 拉取当前 gh-pages 分支内容
+          # 初始化本地 git 仓库
           git init
           git remote add origin https://github.com/SEhzm/HGU-ZXXX.git
           git fetch origin
-          git checkout -B gh-pages origin/gh-pages
 
-          # 删除 gh-pages 中的 assets 文件夹
+          # 检查 gh-pages 分支是否存在
+          if git rev-parse --verify origin/gh-pages; then
+            git checkout gh-pages
+          else
+            git checkout --orphan gh-pages
+          fi
+
+          # 删除 gh-pages 分支中的 assets 文件夹
           rm -rf ./assets
 
-          # 将编译后的文件从 dist 文件夹复制到根目录
+          # 将编译后的文件从 dist 文件夹复制到当前目录
           cp -r ./dist/* .
 
-          # 添加所有变更并提交
+          # 提交并推送更新到 gh-pages 分支
           git add .
           git commit -m "自动部署: 更新打包文件，删除旧的 assets 文件夹"
-
-          # 强制推送到 gh-pages 分支，确保删除 assets
           git push -f https://x-access-token:${{ secrets.ACCESS_TOKEN }}@github.com/SEhzm/HGU-ZXXX.git gh-pages

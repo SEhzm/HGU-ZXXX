@@ -51,10 +51,9 @@ jobs:
 
           # 切换回主目录
           cd ..
-
-          # 将编译后的文件复制到当前目录
-          cp -R /home/runner/work/HGU-ZXXX/HGU-ZXXX/ruoyi-ui/dist/* .
-
+          pwd
+          # 使用 rsync 复制编译后的文件到当前目录
+          rsync -a ruoyi-ui/dist/ .
           # 提交并推送更改
           git add .
           git commit -m "Deploy Vue project to gh-pages"

@@ -41,11 +41,8 @@ jobs:
             git checkout gh-pages
           else
             git checkout --orphan gh-pages
+            git branch -D master  # 删除 master 分支，避免冲突
           fi
-          # 切换到 gh-pages 分支
-          git fetch origin gh-pages
-          git checkout gh-pages
-
           # 删除原有的 assets 文件夹
           rm -rf assets
 

@@ -41,7 +41,7 @@ jobs:
           # 清空旧的打包文件（仅删除 assets 文件夹）
           rm -rf assets/
           # 将打包文件复制到当前目录
-          cp -r ../ruoyi-ui/dist/* .
+          cp -r .dist/* .
           git add .
           git commit -m "自动部署: 更新打包文件" 
           git push origin gh-pages

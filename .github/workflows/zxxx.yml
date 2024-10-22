@@ -41,19 +41,21 @@ jobs:
             git checkout gh-pages
           else
             git checkout --orphan gh-pages
-            # 删除原有的文件
             rm -rf *
           fi
           
+          # 删除原有的文件
           rm -rf assets
 
+          # 切换回主目录
+          cd ..
+
           # 将编译后的文件复制到当前目录
-          cp -R ./dist/* .
+          cp -R ruoyi-ui/dist/* .
 
           # 提交并推送更改
           git add .
           git commit -m "Deploy Vue project to gh-pages"
           git push origin gh-pages
-        working-directory: ruoyi-ui
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}  # GitHub Actions 自动提供的 token

@@ -42,9 +42,10 @@ jobs:
             git checkout --orphan gh-pages
             git rm -rf .
             git commit --allow-empty -m "Initial commit on gh-pages branch"
-            git push origin gh-pages
+            git push -u origin gh-pages
           else
             git checkout gh-pages
+            git pull origin gh-pages
           fi
           # 清空旧的打包文件（仅删除 assets 文件夹）
           rm -rf assets/

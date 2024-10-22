@@ -35,13 +35,13 @@ jobs:
 
       - name: 部署到 gh-pages 分支
         run: |
-          git config --global user.name 'github-actions'
-          git config --global user.email 'github-actions@github.com'
+          git config --global user.name 'SEhzm'
+          git config --global user.email '2693445032@qq.com'
           git checkout -B gh-pages
           # 清空旧的打包文件（仅删除 assets 文件夹）
           rm -rf assets/
           # 将打包文件复制到当前目录
           cp -r ../ruoyi-ui/dist/* .
           git add .
-          git commit -m "自动部署: 更新打包文件" || echo "No changes to commit"
+          git commit -m "自动部署: 更新打包文件" 
           git push origin gh-pages

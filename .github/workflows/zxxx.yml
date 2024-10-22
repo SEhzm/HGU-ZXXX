@@ -27,11 +27,12 @@ jobs:
         working-directory: ruoyi-ui
 
       - name: 检查打包输出
-        run: ls -la ./dist
+        run: ls -la ruoyi-ui/dist
         working-directory: ruoyi-ui
 
       - name: 部署到 gh-pages 分支
         run: |
+          cd ruoyi-ui
           git config --global user.name 'SEhzm'
           git config --global user.email '2693445032@qq.com'
           

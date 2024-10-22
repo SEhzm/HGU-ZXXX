@@ -42,4 +42,4 @@ jobs:
           git add .
           git commit -m "自动部署: 更新打包文件"
           # 强制推送到 gh-pages 分支
-          git push -f https://github.com/SEhzm/HGU-ZXXX.git master:gh-pages
+          git push -f https://x-access-token:${{ secrets.ACCESS_TOKEN }}@github.com/SEhzm/HGU-ZXXX.git master:gh-pages

@@ -40,13 +40,13 @@ jobs:
           git clone https://sehzm:${{ secrets.ACCESS_TOKEN }}@github.com/SEhzm/HGU-ZXXX.git hgu-zxxx
           cd hgu-zxxx
           git checkout gh-pages || git checkout --orphan gh-pages
-          # 清空旧的打包文件（根据需要调整路径，避免删除不必要的文件）仅删除assets文件夹，不能删到CNAME文件
-          rm -rf assets/ 
+          # 清空旧的打包文件（仅删除 assets 文件夹）
+          rm -rf assets/
           # 创建一个临时分支用于合并
           git checkout -b temp-branch
           
           # 将打包文件复制到临时分支
-          cp -r ./dist .
+          cp -r ../ruoyi-ui/dist/* .
           git add .
           git commit -m "自动部署: 更新打包文件"
           

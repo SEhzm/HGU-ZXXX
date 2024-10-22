@@ -27,7 +27,7 @@ jobs:
         working-directory: ruoyi-ui
 
       - name: 检查打包输出
-        run: ls -la ruoyi-ui/dist
+        run: ls -la ./dist
         working-directory: ruoyi-ui
 
       - name: 部署到 gh-pages 分支

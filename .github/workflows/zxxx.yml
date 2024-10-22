@@ -53,7 +53,7 @@ jobs:
           cd ..
 
           # 将编译后的文件复制到当前目录
-          cp -R ruoyi-ui/dist/* .
+          cp -R /home/runner/work/HGU-ZXXX/HGU-ZXXX/ruoyi-ui/dist/* .
 
           # 提交并推送更改
           git add .

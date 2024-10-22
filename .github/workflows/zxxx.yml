@@ -48,7 +48,11 @@ jobs:
           
           # 删除原有的文件
           rm -rf assets
-
+          # 再次检查 dist 目录是否存在
+          if [ ! -d "ruoyi-ui/dist" ]; then
+          echo "Error: ruoyi-ui/dist directory not found."
+          exit 1
+          fi
           # 切换回主目录
           cd ..
           pwd

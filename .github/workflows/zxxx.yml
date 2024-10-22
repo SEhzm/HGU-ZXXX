@@ -10,14 +10,14 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0  # 确保完整的 Git 历史被克隆，以便可以删除文件夹
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: '16'  # 请根据你的项目需要修改 Node.js 版本
+          node-version: '20.x'  # 请根据你的项目需要修改 Node.js 版本
 
       - name: Install dependencies
         working-directory: ruoyi-ui

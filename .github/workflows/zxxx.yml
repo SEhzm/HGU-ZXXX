@@ -31,6 +31,7 @@ jobs:
         working-directory: ruoyi-ui
 
       - name: 部署到 gh-pages 分支
+        working-directory: ruoyi-ui
         run: |
           git config --global user.name 'SEhzm'
           git config --global user.email '2693445032@qq.com'

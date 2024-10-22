@@ -1,66 +1,72 @@
-name: 自动化打包，部署vue项目到gh-pages分支
+# .github/workflows/auto-deploy.yml
+
+name: auto deploy
 
 on:
+  # 监听push操作
   push:
+    branches:
+      - master # 这里只配置了main分支，所以只有推送main分支才会触发以下任务
+  pull_request:
+
+  # 这个选项可以使你手动在 Action tab 页面触发工作流
+  # workflow_dispatch:
 
 permissions:
+  # 允许对仓库的内容进行写操作。包括创建、修改和删除文件、目录以及提交更改等
   contents: write
+  # 允许管理 GitHub Pages 服务并对其进行写操作
+  pages: write
 
 jobs:
-  npm-build:
-    name: npmbuild运行
+  # 任务ID
+  build-and-deploy:
+    # 运行环境
     runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
 
+    # 步骤
     steps:
-      - name: 读取仓库
-        uses: actions/checkout@v4
+      # 官方action，将代码拉取到虚拟机
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - name: 设置 Node.js
-        uses: actions/setup-node@v4
+      # 建一个名为setup-node的步骤（安装指定版本的Node.js）
+      - name: Setup Node.js
+        # 使用setup-node@v3这个action
+        uses: actions/setup-node@v3
+        # 指定某个action 可能需要输入的参数
         with:
-          node-version: '20.x'  # 根据项目需求选择合适版本
+          node-version: '20.x'
 
-      - name: 安装依赖
-        run: npm install --verbose
-        working-directory: ruoyi-ui
+      # 安装 pnpm
+      - name: Install pnpm
+        run: npm install pnpm -g
 
-      - name: 打包项目
-        run: npm run build:prod
-        working-directory: ruoyi-ui
+      # 安装依赖
+      - name: Install dependencies
+        run: pnpm i
 
-      - name: 检查打包输出
+      # 打包
+      - name: Build application
+        run: pnpm run build:prod
+
+      # 检查打包输出
+      - name: Check build output
         run: |
           ls -la ./dist
           pwd
         working-directory: ruoyi-ui
 
-      - name: 部署到 gh-pages
-        run: |
-          git config --global user.name "SEhzm"
-          git config --global user.email "2693445032@qq.com" # 请替换为你的邮箱
-          # 检查 gh-pages 分支是否存在
-          if git show-ref --quiet refs/heads/gh-pages; then
-            git checkout gh-pages
-          else
-            git checkout --orphan gh-pages
-            rm -rf *
-          fi
-          
-          # 删除原有的文件
-          rm -rf assets
-          # 再次检查 dist 目录是否存在
-          if [ ! -d "ruoyi-ui/dist" ]; then
-          echo "Error: ruoyi-ui/dist directory not found."
-          exit 1
-          fi
-          # 切换回主目录
-          cd ..
-          pwd
-          # 使用 rsync 复制编译后的文件到当前目录
-          rsync -a ruoyi-ui/dist/ .
-          # 提交并推送更改
-          git add .
-          git commit -m "Deploy Vue project to gh-pages"
-          git push origin gh-pages
-        env:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}  # GitHub Actions 自动提供的 token
+      # 部署 https://github.com/JamesIves/github-pages-deploy-action
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        if: github.ref == 'refs/heads/main'
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
+          branch: gh-pages  # default: gh-pages
+          folder: ruoyi-ui/dist
+          clean: true # Automatically remove deleted files from the deploy branch
+          # commit-message: ${{ github.event.head_commit.message }} # default: `Deploying to gh-pages from @ 3238feb `
+          # commit-message: "deploy: ${{ github.sha }} (${{ github.event.head_commit.message }}) "

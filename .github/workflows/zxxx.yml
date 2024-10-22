@@ -68,3 +68,16 @@ jobs:
           # commit-message: ${{ github.event.head_commit.message }} # default: `Deploying to gh-pages from @ 3238feb `
           # commit-message: "deploy: ${{ github.sha }} (${{ github.event.head_commit.message }}) "
       # 确保 gh-pages 分支存在，如果不存在则创建
+      - name: Ensure gh-pages branch exists
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config --global user.name "SEhzm"
+          git config --global user.email "2693445032@qq.com"
+          if ! git show-ref --quiet refs/heads/gh-pages; then
+            git checkout --orphan gh-pages
+            git rm -rf .
+            git commit --allow-empty -m "Initial commit on gh-pages branch"
+            git push origin gh-pages
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}

@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: 进入ui
+        run: cd ruoyi-ui
+
       - name: 读取仓库
         uses: actions/checkout@v4
 

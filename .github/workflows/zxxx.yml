@@ -9,62 +9,60 @@ on:
       - master # 这里只配置了main分支，所以只有推送main分支才会触发以下任务
   pull_request:
 
-  # 这个选项可以使你手动在 Action tab 页面触发工作流
-  # workflow_dispatch:
-
 permissions:
-  # 允许对仓库的内容进行写操作。包括创建、修改和删除文件、目录以及提交更改等
   contents: write
-  # 允许管理 GitHub Pages 服务并对其进行写操作
   pages: write
 
 jobs:
-  # 任务ID
   build-and-deploy:
-    # 运行环境
     runs-on: ubuntu-latest
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
 
-    # 步骤
     steps:
-      # 官方action，将代码拉取到虚拟机
       - name: Checkout
         uses: actions/checkout@v4
 
-      # 建一个名为setup-node的步骤（安装指定版本的Node.js）
       - name: Setup Node.js
-        # 使用setup-node@v3这个action
         uses: actions/setup-node@v4
-        # 指定某个action 可能需要输入的参数
         with:
           node-version: '20.x'
-      # 安装依赖
+
       - name: Install dependencies
         run: npm install
         working-directory: ruoyi-ui
 
-      # 打包
       - name: Build application
         run: npm run build:prod
         working-directory: ruoyi-ui
 
-      # 检查打包输出
       - name: Check build output
-        run: | 
+        run: |
           ls -la ./dist
           pwd
         working-directory: ruoyi-ui
 
-      # 部署 https://github.com/JamesIves/github-pages-deploy-action
+      # 检查 gh-pages 分支是否存在
+      - name: Check if gh-pages branch exists
+        id: check_branch
+        run: |
+          git ls-remote --heads origin gh-pages
+          if [ $? -eq 0 ]; then
+            echo "::set-output name=branch_exists::true"
+          else
+            echo "::set-output name=branch_exists::false"
+          fi
+
+      # 如果 gh-pages 分支存在，则删除 assets 文件夹
+      - name: Remove assets folder
+        if: steps.check_branch.outputs.branch_exists == 'true'
+        run: rm -rf ./ruoyi-ui/dist/assets
+
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         if: github.ref == 'refs/heads/master'
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
-          branch: gh-pages  # default: gh-pages
+          branch: gh-pages
           folder: ruoyi-ui/dist
-          clean: true # Automatically remove deleted files from the deploy branch
-          # commit-message: ${{ github.event.head_commit.message }} # default: `Deploying to gh-pages from @ 3238feb `
-          # commit-message: "deploy: ${{ github.sha }} (${{ github.event.head_commit.message }}) "
-      # 确保 gh-pages 分支存在，如果不存在则创建
+          clean: true

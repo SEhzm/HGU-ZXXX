@@ -36,8 +36,12 @@ jobs:
         run: |
           git config --global user.name "SEhzm"
           git config --global user.email "2693445032@qq.com" # 请替换为你的邮箱
-          # 检查 gh-pages 分支是否存在，如果不存在则创建
-          git fetch origin gh-pages || git checkout --orphan gh-pages
+          # 检查 gh-pages 分支是否存在
+          if git show-ref --quiet refs/heads/gh-pages; then
+            git checkout gh-pages
+          else
+            git checkout --orphan gh-pages
+          fi
           # 切换到 gh-pages 分支
           git fetch origin gh-pages
           git checkout gh-pages

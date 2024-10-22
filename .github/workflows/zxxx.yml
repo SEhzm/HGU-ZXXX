@@ -1,71 +1,50 @@
-name: 自动化打包，部署vue项目到gh-pages分支
-on: push
+name: Deploy to GitHub Pages
 
-permissions:
-  contents: write
+on:
+  push:
+    branches:
+      - main  # 或者其他你希望触发部署的分支
 
 jobs:
-  npm-build:
-    name: npmbuild运行
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 读取仓库
-        uses: actions/checkout@v4
-
-      - name: 设置 Node.js
-        uses: actions/setup-node@v4
+      - name: Checkout repository
+        uses: actions/checkout@v2
         with:
-          node-version: '20.x'  # 根据项目需求选择合适版本
+          fetch-depth: 0  # 确保完整的 Git 历史被克隆，以便可以删除文件夹
 
-      - name: 安装依赖
-        run: npm install --verbose
-        working-directory: ruoyi-ui
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'  # 请根据你的项目需要修改 Node.js 版本
 
-      - name: 打包项目
-        run: npm run build:prod
+      - name: Install dependencies
         working-directory: ruoyi-ui
+        run: npm install
 
-      - name: 检查打包输出
-        run: ls -la ./dist
+      - name: Build project
         working-directory: ruoyi-ui
+        run: npm run build  # 请确保 package.json 中有 build 脚本
 
-      - name: 部署到 gh-pages 分支
-        working-directory: ruoyi-ui
+      - name: Remove assets folder from gh-pages
         run: |
-          git config --global user.name 'SEhzm'
-          git config --global user.email '2693445032@qq.com'
-          
-          # 克隆 gh-pages 分支，如果不存在则创建它
-          git clone https://sehzm:${{ secrets.ACCESS_TOKEN }}@github.com/SEhzm/HGU-ZXXX.git gh-pages-repo
-          cd gh-pages-repo
-          
-          # 检查是否存在 gh-pages 分支
-          if git show-ref --quiet refs/heads/gh-pages; then
-            git checkout gh-pages
+          git config --global user.name "SEhzm"
+          git config --global user.email "2639445032@qq.com"
+          if git show-ref --verify --quiet refs/heads/gh-pages; then
+            git checkout gh-pages  # 如果存在，切换到 gh-pages 分支
           else
-            git checkout --orphan gh-pages  # 创建空的 gh-pages 分支
+            git checkout --orphan gh-pages  # 如果不存在，创建一个新的 gh-pages 分支
+            git rm -rf .  # 删除所有现有文件
           fi
-          
-          # 删除旧的 assets 文件夹，但保留 CNAME 文件
-          rm -rf assets/
-          
-          # 创建一个临时分支用于更新打包文件
-          git checkout -b temp-branch
-          
-          # 将打包文件从 dist 复制到当前目录
-          cp -r ../ruoyi-ui/dist/* .  # 确保路径正确
-          
-          # 提交更新
-          git add .
-          git commit -m "自动部署: 更新打包文件，删除旧的 assets 文件夹"
-          
-          # 切换回 gh-pages 分支并合并临时分支
-          git checkout gh-pages
-          git merge temp-branch --no-edit
-          
-          # 推送合并后的 gh-pages 分支
-          git push https://sehzm:${{ secrets.ACCESS_TOKEN }}@github.com/SEhzm/HGU-ZXXX.git gh-pages
-          
-          # 删除临时分支
-          git branch -d temp-branch
+          rm -rf assets  # 删除 assets 文件夹
+          git add -A  # 添加所有变更
+          git commit -m "Remove assets folder" || echo "No changes to commit"  # 如果没有变更则忽略错误
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4.0.0
+        with:
+          branch: gh-pages
+          folder: ruoyi-ui/dist  # 修改为你的构建输出目录
+          token: ${{ secrets.GITHUB_TOKEN }}  # GitHub Actions 自动提供的令牌

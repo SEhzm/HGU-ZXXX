@@ -5,7 +5,8 @@ permissions:
   contents: write
 
 jobs:
-  build-and-deploy:
+  npm-build:
+    name: npmbuild运行
     runs-on: ubuntu-latest
 
     steps:
@@ -25,7 +26,7 @@ jobs:
 
       - name: Build project
         working-directory: ruoyi-ui
-        run: npm run build  # 请确保 package.json 中有 build 脚本
+        run: npm run build:prod
 
       - name: Remove assets folder from gh-pages
         run: |

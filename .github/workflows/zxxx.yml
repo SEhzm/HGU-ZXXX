@@ -21,7 +21,7 @@ jobs:
       - name: 进入 ruoyi-ui 目录
         run: cd ruoyi-ui
 
-      - name: 安装依赖
+      - name: 安装依赖1
         run: npm install --verbose
         working-directory: ruoyi-ui
 

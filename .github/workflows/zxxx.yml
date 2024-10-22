@@ -1,4 +1,4 @@
-name: 自动化打包，部署vue项目到zxxx库
+name: 自动化打包，部署vue项目到gh-pages分支
 on: push
 
 permissions:
@@ -33,29 +33,15 @@ jobs:
         run: ls -la ./dist  # 如果输出目录是 dist，可以用此步骤确认打包文件
         working-directory: ruoyi-ui
 
-      - name: 部署到 HGU-ZXXX 的 gh-pages 分支
+      - name: 部署到 gh-pages 分支
         run: |
-          git config --global user.name 'SEhzm'
-          git config --global user.email '2693445032@qq.com'
-          git clone https://sehzm:${{ secrets.ACCESS_TOKEN }}@github.com/SEhzm/HGU-ZXXX.git hgu-zxxx
-          cd hgu-zxxx
-          git checkout gh-pages || git checkout --orphan gh-pages
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git checkout -B gh-pages
           # 清空旧的打包文件（仅删除 assets 文件夹）
           rm -rf assets/
-          # 创建一个临时分支用于合并
-          git checkout -b temp-branch
-          
-          # 将打包文件复制到临时分支
+          # 将打包文件复制到当前目录
           cp -r ../ruoyi-ui/dist/* .
           git add .
-          git commit -m "自动部署: 更新打包文件"
-          
-          # 切换回 gh-pages 分支并合并临时分支
-          git checkout gh-pages
-          git merge temp-branch --no-edit
-          
-          # 推送合并后的 gh-pages 分支
-          git push https://sehzm:${{ secrets.ACCESS_TOKEN }}@github.com/SEhzm/HGU-ZXXX.git gh-pages
-          
-          # 删除临时分支 
-          git branch -d temp-branch
+          git commit -m "自动部署: 更新打包文件" || echo "No changes to commit"
+          git push origin gh-pages

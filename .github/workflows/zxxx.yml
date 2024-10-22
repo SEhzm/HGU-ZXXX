@@ -39,22 +39,19 @@ jobs:
         # 指定某个action 可能需要输入的参数
         with:
           node-version: '20.x'
-
-      # 安装 pnpm
-      - name: Install pnpm
-        run: npm install pnpm -g
-
       # 安装依赖
       - name: Install dependencies
-        run: pnpm i
+        run: npm install
+        working-directory: ruoyi-ui
 
       # 打包
       - name: Build application
-        run: pnpm run build:prod
+        run: npm run build:prod
+        working-directory: ruoyi-ui
 
       # 检查打包输出
       - name: Check build output
-        run: |
+        run: | 
           ls -la ./dist
           pwd
         working-directory: ruoyi-ui
@@ -64,7 +61,7 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         if: github.ref == 'refs/heads/main'
         with:
-          token: ${{ secrets.ACCESS_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages  # default: gh-pages
           folder: ruoyi-ui/dist
           clean: true # Automatically remove deleted files from the deploy branch

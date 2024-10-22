@@ -74,7 +74,7 @@ app.component('svg-icon', SvgIcon)
 
 directive(app)
 
-// 使用element-plus 并且设置全局的大小
+// 使用element-plus 并且设置全局的大小为default
 app.use(ElementPlus, {
   locale: locale,
   // 支持 large、default、small

@@ -1,0 +1,54 @@
+# .github/workflows/auto-deploy.yml
+
+name: auto deploy
+
+on:
+  # 监听push操作
+  push:
+    branches:
+      - master # 这里只配置了main分支，所以只有推送main分支才会触发以下任务
+  pull_request:
+
+permissions:
+  contents: write
+  pages: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 删除 assets 文件夹
+      - name: Remove assets folder
+        run: rm -rf ./ruoyi-ui/dist/assets
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ruoyi-ui
+
+      - name: Build application
+        run: npm run build:prod
+        working-directory: ruoyi-ui
+
+      - name: Check build output
+        run: ls -la ./dist
+        working-directory: ruoyi-ui
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        if: github.ref == 'refs/heads/master'
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
+          branch: gh-pages
+          folder: ruoyi-ui/dist
+          clean: true

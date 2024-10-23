@@ -1,6 +1,4 @@
-# .github/workflows/auto-deploy.yml
-
-name: auto deploy
+name: HGU-Zxxx-自动化部署
 
 on:
   # 监听push操作
@@ -20,35 +18,35 @@ jobs:
       group: ${{ github.workflow }}-${{ github.ref }}
 
     steps:
-      - name: Checkout
+      - name: 读取仓库
         uses: actions/checkout@v4
 
       # 删除 assets 文件夹
-      - name: Remove assets folder
-        run: rm -rf ./ruoyi-ui/dist/assets
+#      - name: Remove assets folder
+#        run: rm -rf ./zxxx-ui/dist/assets
 
-      - name: Setup Node.js
+      - name: 设置Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
 
-      - name: Install dependencies
+      - name: 安装依赖
         run: npm install
-        working-directory: ruoyi-ui
+        working-directory: zxxx-ui
 
-      - name: Build application
+      - name: 打包项目
         run: npm run build:prod
-        working-directory: ruoyi-ui
+        working-directory: zxxx-ui
 
-      - name: Check build output
+      - name: 检查打包输出
         run: ls -la ./dist
-        working-directory: ruoyi-ui
+        working-directory: zxxx-ui
 
-      - name: Deploy
+      - name: 部署
         uses: JamesIves/github-pages-deploy-action@v4
         if: github.ref == 'refs/heads/master'
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
           branch: gh-pages
-          folder: ruoyi-ui/dist
+          folder: zxxx-ui/dist
           clean: true

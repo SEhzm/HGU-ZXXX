@@ -1,6 +1,6 @@
 package site.hgu7.generator.domain;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 import site.hgu7.common.core.domain.BaseEntity;
 import site.hgu7.common.utils.StringUtils;
 

@@ -1,5 +1,6 @@
 <template>
   <div class="login">
+    <img src="@/assets/images/study.png" style="position: relative;right:200px">
     <el-form ref="loginRef" :model="loginForm" :rules="loginRules" class="login-form">
       <h3 class="title">河北地质大学在线学习平台</h3>
       <el-form-item prop="username">
@@ -49,7 +50,7 @@
           style="width:100%;"
           @click.prevent="handleLogin"
         >
-          <span v-if="!loading">登 录</span>
+          <span v-if="!loading" style="font-size: 20px">登 录</span>
           <span v-else>登 录 中...</span>
         </el-button>
         <div style="float: right;" v-if="register">
@@ -226,6 +227,6 @@ getCookie();
 }
 .login-code-img {
   height: 40px;
-  padding-left: 12px;
+  padding-left: 28px;
 }
 </style>

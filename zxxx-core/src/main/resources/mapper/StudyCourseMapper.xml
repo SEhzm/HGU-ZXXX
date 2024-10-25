@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.hug7.study.mapper.StudyCourseMapper">
+
+
+    <!-- 菜单路由映射 -->
+    <resultMap id="StudyCourseMap" type="site.hug7.study.domain.vo.StudyCourseVO">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="courseTypeName" column="Course_type_name" jdbcType="BIGINT"/>
+        <result property="img" column="img" jdbcType="VARCHAR"/>
+        <result property="courseDesc" column="course_desc" jdbcType="VARCHAR"/>
+        <result property="courseEvaluate" column="course_evaluate" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectList" resultType="site.hug7.study.domain.vo.StudyCourseVO">
+        SELECT
+            s.*,
+            t.name AS course_type_name
+        FROM
+            study_course s
+            LEFT JOIN sys_dict_item t ON t.id = s.course_type_id
+    </select>
+    <select id="selectCourseList" resultType="site.hug7.study.domain.vo.StudyCourseVO">
+        SELECT
+            s.*,
+            t.name AS course_type_name
+        FROM
+            study_course s
+            LEFT JOIN sys_dict_item t ON t.id = s.course_type_id
+        WHERE s.name != ''
+            <if test="id != null and id != ''">
+                AND t.id=#{id}
+            </if>
+            <if test="queryKeyName != null and queryKeyName != ''">
+                AND s.name like CONCAT('%', #{queryKeyName}, '%')
+            </if>
+    </select>
+
+
+</mapper>

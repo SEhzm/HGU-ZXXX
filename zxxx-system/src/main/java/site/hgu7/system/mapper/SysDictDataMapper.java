@@ -2,6 +2,7 @@ package site.hgu7.system.mapper;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import site.hgu7.common.core.domain.entity.SysDictData;
 
 /**
@@ -92,4 +93,7 @@ public interface SysDictDataMapper
      * @return 结果
      */
     public int updateDictDataType(@Param("oldDictType") String oldDictType, @Param("newDictType") String newDictType);
+
+    @Select("select dict_code from sys_dict_data where dict_label = #{courseTypeName}")
+    SysDictData getIdByName(@Param("courseTypeName") String courseTypeName);
 }

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.hgu7.core.course.mapper.CourseChaptersMapper">
+    
+    <resultMap type="CourseChapters" id="CourseChaptersResult">
+        <result property="chapterId"    column="chapter_id"    />
+        <result property="courseId"    column="course_id"    />
+        <result property="chapterTitle"    column="chapter_title"    />
+        <result property="chapterDescription"    column="chapter_description"    />
+        <result property="videoUrl"    column="video_url"    />
+        <result property="position"    column="position"    />
+        <result property="createdAt"    column="created_at"    />
+        <result property="updatedAt"    column="updated_at"    />
+    </resultMap>
+
+    <sql id="selectCourseChaptersVo">
+        select chapter_id, course_id, chapter_title, chapter_description, video_url, position, created_at, updated_at from course_chapters
+    </sql>
+
+    <select id="selectCourseChaptersList" parameterType="CourseChapters" resultMap="CourseChaptersResult">
+        <include refid="selectCourseChaptersVo"/>
+        <where>  
+            <if test="courseId != null "> and course_id = #{courseId}</if>
+            <if test="chapterTitle != null  and chapterTitle != ''"> and chapter_title like concat('%', #{chapterTitle}, '%')</if>
+            <if test="chapterDescription != null  and chapterDescription != ''"> and chapter_description = #{chapterDescription}</if>
+            <if test="videoUrl != null  and videoUrl != ''"> and video_url = #{videoUrl}</if>
+            <if test="position != null  and position != ''"> and position = #{position}</if>
+            <if test="createdAt != null "> and created_at = #{createdAt}</if>
+            <if test="updatedAt != null "> and updated_at = #{updatedAt}</if>
+        </where>
+    </select>
+    
+    <select id="selectCourseChaptersByChapterId" parameterType="Integer" resultMap="CourseChaptersResult">
+        <include refid="selectCourseChaptersVo"/>
+        where chapter_id = #{chapterId}
+    </select>
+
+    <insert id="insertCourseChapters" parameterType="CourseChapters" useGeneratedKeys="true" keyProperty="chapterId">
+        insert into course_chapters
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">course_id,</if>
+            <if test="chapterTitle != null">chapter_title,</if>
+            <if test="chapterDescription != null">chapter_description,</if>
+            <if test="videoUrl != null">video_url,</if>
+            <if test="position != null">position,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedAt != null">updated_at,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">#{courseId},</if>
+            <if test="chapterTitle != null">#{chapterTitle},</if>
+            <if test="chapterDescription != null">#{chapterDescription},</if>
+            <if test="videoUrl != null">#{videoUrl},</if>
+            <if test="position != null">#{position},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCourseChapters" parameterType="CourseChapters">
+        update course_chapters
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="courseId != null">course_id = #{courseId},</if>
+            <if test="chapterTitle != null">chapter_title = #{chapterTitle},</if>
+            <if test="chapterDescription != null">chapter_description = #{chapterDescription},</if>
+            <if test="videoUrl != null">video_url = #{videoUrl},</if>
+            <if test="position != null">position = #{position},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+        </trim>
+        where chapter_id = #{chapterId}
+    </update>
+
+    <delete id="deleteCourseChaptersByChapterId" parameterType="Integer">
+        delete from course_chapters where chapter_id = #{chapterId}
+    </delete>
+
+    <delete id="deleteCourseChaptersByChapterIds" parameterType="String">
+        delete from course_chapters where chapter_id in 
+        <foreach item="chapterId" collection="array" open="(" separator="," close=")">
+            #{chapterId}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,7 +1,7 @@
 import { createWebHashHistory, createRouter } from 'vue-router'
 /* Layout */
 import Layout from '@/layout'
-
+import { getToken } from '@/utils/auth';
 /**
  * Note: 路由配置项
  *
@@ -63,29 +63,18 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    path: '/details',
-    component: () => import('@/views/curriculum/details/index'),
-    hidden: true
+    path: '',
+    component: Layout,
+    redirect: '/index',
+    children: [
+      {
+        path: '/index',
+        component: () => import('@/views/index'),
+        name: 'Index',
+        meta: { title: '首页', icon: 'dashboard', affix: true }
+      }
+    ]
   },
-  {
-    path: '/show',
-    component: () => import('@/views/curriculum/show/index'),
-    hidden: true
-  },
-//已屏蔽默认首页
-  // {
-  //   path: '',
-  //   component: Layout,
-  //   redirect: '/index',
-  //   children: [
-  //     {
-  //       path: '/index',
-  //       component: () => import('@/views/index'),
-  //       name: 'Index',
-  //       meta: { title: '首页', icon: 'dashboard', affix: true }
-  //     }
-  //   ]
-  // },
   {
     path: '/user',
     component: Layout,
@@ -188,4 +177,16 @@ const router = createRouter({
   },
 });
 
+
+
+router.beforeEach((to, from, next) => {
+    const token = getToken();
+    if (to.path === '/index' && !token) { //如果用户未登录且访问 zxxxhome，则跳转到 home。
+      next('/home');
+    } else if (to.path === '/home' && token) {  //如果用户已登录且访问 home，则跳转到 zxxxhome。
+      next('/index');
+    } else {
+      next();
+    }
+  });
 export default router;

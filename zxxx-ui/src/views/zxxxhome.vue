@@ -70,7 +70,7 @@
 
 
 <script setup lang="ts">
-import navbar from '../../layout/components/Navbar.vue'
+import navbar from '../layout/components/Navbar.vue'
 import {ref} from 'vue';
 
 const carouselData = ref([

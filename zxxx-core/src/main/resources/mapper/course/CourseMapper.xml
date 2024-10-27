@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.hgu7.core.course.mapper.CourseMapper">
+    
+    <resultMap type="Course" id="CourseResult">
+        <result property="courseId"    column="course_id"    />
+        <result property="courseName"    column="course_name"    />
+        <result property="courseDescription"    column="course_description"    />
+        <result property="userId"    column="user_id"    />
+        <result property="createdAt"    column="created_at"    />
+        <result property="updatedAt"    column="updated_at"    />
+        <result property="teacher"    column="teacher"    />
+        <result property="courseCategory"    column="course_category"    />
+        <result property="courseImg"    column="course_img"    />
+    </resultMap>
+
+    <sql id="selectCourseVo">
+        select course_id, course_name, course_description, user_id, created_at, updated_at, teacher, course_category, course_img from course
+    </sql>
+
+    <select id="selectCourseList" parameterType="Course" resultMap="CourseResult">
+        <include refid="selectCourseVo"/>
+        <where>  
+            <if test="courseName != null  and courseName != ''"> and course_name like concat('%', #{courseName}, '%')</if>
+            <if test="courseDescription != null  and courseDescription != ''"> and course_description = #{courseDescription}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="createdAt != null "> and created_at = #{createdAt}</if>
+            <if test="updatedAt != null "> and updated_at = #{updatedAt}</if>
+            <if test="teacher != null  and teacher != ''"> and teacher like concat('%', #{teacher}, '%')</if>
+            <if test="courseCategory != null  and courseCategory != ''"> and course_category = #{courseCategory}</if>
+        </where>
+    </select>
+    
+    <select id="selectCourseByCourseId" parameterType="Integer" resultMap="CourseResult">
+        <include refid="selectCourseVo"/>
+        where course_id = #{courseId}
+    </select>
+
+    <insert id="insertCourse" parameterType="Course" useGeneratedKeys="true" keyProperty="courseId">
+        insert into course
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="courseName != null">course_name,</if>
+            <if test="courseDescription != null">course_description,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedAt != null">updated_at,</if>
+            <if test="teacher != null">teacher,</if>
+            <if test="courseCategory != null">course_category,</if>
+            <if test="courseImg != null">course_img,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="courseName != null">#{courseName},</if>
+            <if test="courseDescription != null">#{courseDescription},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+            <if test="teacher != null">#{teacher},</if>
+            <if test="courseCategory != null">#{courseCategory},</if>
+            <if test="courseImg != null">#{courseImg},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCourse" parameterType="Course">
+        update course
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="courseName != null">course_name = #{courseName},</if>
+            <if test="courseDescription != null">course_description = #{courseDescription},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+            <if test="teacher != null">teacher = #{teacher},</if>
+            <if test="courseCategory != null">course_category = #{courseCategory},</if>
+            <if test="courseImg != null">course_img = #{courseImg},</if>
+        </trim>
+        where course_id = #{courseId}
+    </update>
+
+    <delete id="deleteCourseByCourseId" parameterType="Integer">
+        delete from course where course_id = #{courseId}
+    </delete>
+
+    <delete id="deleteCourseByCourseIds" parameterType="String">
+        delete from course where course_id in 
+        <foreach item="courseId" collection="array" open="(" separator="," close=")">
+            #{courseId}
+        </foreach>
+    </delete>
+</mapper>

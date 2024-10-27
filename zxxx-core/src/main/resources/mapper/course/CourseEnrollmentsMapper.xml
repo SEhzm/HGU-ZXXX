@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.hgu7.core.course.mapper.CourseEnrollmentsMapper">
+    
+    <resultMap type="CourseEnrollments" id="CourseEnrollmentsResult">
+        <result property="enrollmentId"    column="enrollment_id"    />
+        <result property="courseId"    column="course_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="enrollmentDate"    column="enrollment_date"    />
+        <result property="chapterId"    column="chapter_id"    />
+        <result property="courseStatus"    column="course_status"    />
+    </resultMap>
+
+    <sql id="selectCourseEnrollmentsVo">
+        select enrollment_id, course_id, user_id, enrollment_date, chapter_id, course_status from course_enrollments
+    </sql>
+
+    <select id="selectCourseEnrollmentsList" parameterType="CourseEnrollments" resultMap="CourseEnrollmentsResult">
+        <include refid="selectCourseEnrollmentsVo"/>
+        <where>  
+            <if test="courseId != null "> and course_id = #{courseId}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="enrollmentDate != null "> and enrollment_date = #{enrollmentDate}</if>
+            <if test="chapterId != null "> and chapter_id = #{chapterId}</if>
+            <if test="courseStatus != null  and courseStatus != ''"> and course_status = #{courseStatus}</if>
+        </where>
+        order by enrollment_id desc
+    </select>
+    
+    <select id="selectCourseEnrollmentsByEnrollmentId" parameterType="Integer" resultMap="CourseEnrollmentsResult">
+        <include refid="selectCourseEnrollmentsVo"/>
+        where enrollment_id = #{enrollmentId}
+    </select>
+
+
+    <insert id="insertCourseEnrollments" parameterType="CourseEnrollments" useGeneratedKeys="true" keyProperty="enrollmentId">
+        insert into course_enrollments
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">course_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="enrollmentDate != null">enrollment_date,</if>
+            <if test="chapterId != null">chapter_id,</if>
+            <if test="courseStatus != null">course_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">#{courseId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="enrollmentDate != null">#{enrollmentDate},</if>
+            <if test="chapterId != null">#{chapterId},</if>
+            <if test="courseStatus != null">#{courseStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCourseEnrollments" parameterType="CourseEnrollments">
+        update course_enrollments
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="courseId != null">course_id = #{courseId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="enrollmentDate != null">enrollment_date = #{enrollmentDate},</if>
+            <if test="chapterId != null">chapter_id = #{chapterId},</if>
+            <if test="courseStatus != null">course_status = #{courseStatus},</if>
+        </trim>
+        where enrollment_id = #{enrollmentId}
+    </update>
+
+    <delete id="deleteCourseEnrollmentsByEnrollmentId" parameterType="Integer">
+        delete from course_enrollments where enrollment_id = #{enrollmentId}
+    </delete>
+
+    <delete id="deleteCourseEnrollmentsByEnrollmentIds" parameterType="String">
+        delete from course_enrollments where enrollment_id in 
+        <foreach item="enrollmentId" collection="array" open="(" separator="," close=")">
+            #{enrollmentId}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,6 +1,6 @@
 package site.hgu7.framework.web.service;
 
-import jakarta.annotation.Resource;
+import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;

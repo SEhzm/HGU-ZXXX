@@ -108,10 +108,4 @@ public class SysDictDataServiceImpl implements ISysDictDataService
         }
         return row;
     }
-
-    @Override
-    public SysDictData getIdByName(String courseTypeName) {
-        SysDictData sysDictData= dictDataMapper.getIdByName(courseTypeName);
-        return sysDictData;
-    }
 }

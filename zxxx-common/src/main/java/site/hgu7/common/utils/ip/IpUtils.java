@@ -2,7 +2,7 @@ package site.hgu7.common.utils.ip;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import site.hgu7.common.utils.ServletUtils;
 import site.hgu7.common.utils.StringUtils;
 

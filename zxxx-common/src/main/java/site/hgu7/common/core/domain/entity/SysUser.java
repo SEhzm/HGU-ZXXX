@@ -2,7 +2,7 @@ package site.hgu7.common.core.domain.entity;
 
 import java.util.Date;
 import java.util.List;
-import jakarta.validation.constraints.*;
+import javax.validation.constraints.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import site.hgu7.common.annotation.Excel;

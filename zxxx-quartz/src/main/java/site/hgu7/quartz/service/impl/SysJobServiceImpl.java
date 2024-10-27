@@ -1,7 +1,7 @@
 package site.hgu7.quartz.service.impl;
 
 import java.util.List;
-import jakarta.annotation.PostConstruct;
+import javax.annotation.PostConstruct;
 import org.quartz.JobDataMap;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;

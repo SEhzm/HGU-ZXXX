@@ -1,6 +1,6 @@
 package site.hgu7.framework.config;
 
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 import site.hgu7.common.utils.ServletUtils;
 

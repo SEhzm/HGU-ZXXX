@@ -135,6 +135,7 @@ function uploadImg() {
       open.value = false;
       options.img = import.meta.env.VITE_APP_BASE_API + response.imgUrl;
       userStore.avatar = options.img;
+      console.log(userStore.avatar)
       proxy.$modal.msgSuccess("修改成功");
       visible.value = false;
     });

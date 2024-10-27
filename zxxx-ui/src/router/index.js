@@ -63,18 +63,29 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    path: '',
-    component: Layout,
-    redirect: '/index',
-    children: [
-      {
-        path: '/index',
-        component: () => import('@/views/index'),
-        name: 'Index',
-        meta: { title: '首页', icon: 'dashboard', affix: true }
-      }
-    ]
+    path: '/details',
+    component: () => import('@/views/curriculum/details/index'),
+    hidden: true
   },
+  {
+    path: '/show',
+    component: () => import('@/views/curriculum/show/index'),
+    hidden: true
+  },
+//已屏蔽默认首页
+  // {
+  //   path: '',
+  //   component: Layout,
+  //   redirect: '/index',
+  //   children: [
+  //     {
+  //       path: '/index',
+  //       component: () => import('@/views/index'),
+  //       name: 'Index',
+  //       meta: { title: '首页', icon: 'dashboard', affix: true }
+  //     }
+  //   ]
+  // },
   {
     path: '/user',
     component: Layout,

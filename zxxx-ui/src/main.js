@@ -26,7 +26,8 @@ import './permission' // permission control
 
 import { useDict } from '@/utils/dict'
 import { parseTime, resetForm, addDateRange, handleTree, selectDictLabel, selectDictLabels } from '@/utils/ruoyi'
-
+// 全局样式
+import '@/assets/styles/global.css'
 // 分页组件
 import Pagination from '@/components/Pagination'
 // 自定义表格工具组件

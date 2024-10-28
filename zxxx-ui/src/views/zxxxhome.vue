@@ -7,7 +7,7 @@
                     <b class="header-title">在线学习平台（圆桌组）</b>
                     <navbar class="navbar">
                     </navbar>
-                    <img src="../../assets/images/profile.jpg" alt="" class="user-img"/>
+                    <img src="@/assets/images/profile.jpg" alt="" class="user-img"/>
                 </div>
             </div>
         </div>

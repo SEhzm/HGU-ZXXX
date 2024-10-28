@@ -1,18 +1,23 @@
 <template>
-    <div class="course-all">
+    <div class="course-all" >
         <img :src=data.courseImg alt="" class="course-img">
         <div class="course-info">
             <span style="font-size: 30px">{{ data.courseName }}</span>
+            <span style="margin-left: 500px;font-size: 20px">授课教师：<b>{{ data.teacher }}</b></span>
+            <br>
             <p>开课时间：{{ data.createdAt }}</p>
             <br>
             <p>学习方式：在线学习</p>
-            <br>
-            <el-button type="primary">立即学习</el-button>
+            <el-button type="primary" style="margin-top: 100px;margin-left: 20px">立即学习</el-button>
+
         </div>
 
+
     </div>
-    <div >
-        课程简介
+
+    <div class="course-jianjie card">
+        <p style="font-size: 20px;width: 100px;">课程简介</p><br><br>
+        <p>{{ data.courseDescription }}</p>
     </div>
 </template>
 
@@ -58,16 +63,29 @@ watch(courseId, (newId) => {
 
 <style scoped>
 @media (min-width: 601px) {
+    .course-jianjie{
+        width: 1000px;
+        margin-left: 100px;
+        margin-top: 50px;
+    }
     .course-all{
         display: flex;
     }
     .course-img {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,.2);
         margin-left: 100px;
         margin-top: 100px;
         width: 500px;
     }
 
     .course-info {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,.2);
         width: 1000px;
         margin-left: 50px;
         margin-top: 100px;

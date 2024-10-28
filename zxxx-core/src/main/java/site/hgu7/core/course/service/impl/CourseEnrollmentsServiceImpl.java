@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import site.hgu7.common.utils.SecurityUtils;
 import site.hgu7.core.course.mapper.CourseEnrollmentsMapper;
 import site.hgu7.core.course.domain.CourseEnrollments;
 import site.hgu7.core.course.domain.Course;
@@ -113,5 +114,10 @@ public class CourseEnrollmentsServiceImpl implements ICourseEnrollmentsService
     public int deleteCourseEnrollmentsByEnrollmentId(Integer enrollmentId)
     {
         return courseEnrollmentsMapper.deleteCourseEnrollmentsByEnrollmentId(enrollmentId);
+    }
+    @Override
+    public int selectCourse(Integer courseIds) {
+        Long userId = SecurityUtils.getUserId();
+        return courseEnrollmentsMapper.selectCourse(courseIds,userId);
     }
 }

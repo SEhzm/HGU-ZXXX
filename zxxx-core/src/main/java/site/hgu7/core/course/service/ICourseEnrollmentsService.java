@@ -58,4 +58,6 @@ public interface ICourseEnrollmentsService
      * @return 结果
      */
     public int deleteCourseEnrollmentsByEnrollmentId(Integer enrollmentId);
+
+    int selectCourse(Integer courseIds);
 }

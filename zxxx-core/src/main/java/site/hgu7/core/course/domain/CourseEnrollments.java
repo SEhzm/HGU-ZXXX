@@ -47,4 +47,5 @@ public class CourseEnrollments extends BaseEntity
     @Excel(name = "课程状态")
     private String courseStatus;
 
+
 }

@@ -45,8 +45,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="chapterDescription != null">chapter_description,</if>
             <if test="videoUrl != null">video_url,</if>
             <if test="position != null">position,</if>
-            <if test="createdAt != null">created_at,</if>
-            <if test="updatedAt != null">updated_at,</if>
+            created_at,
+            updated_at
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="courseId != null">#{courseId},</if>
@@ -54,8 +54,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="chapterDescription != null">#{chapterDescription},</if>
             <if test="videoUrl != null">#{videoUrl},</if>
             <if test="position != null">#{position},</if>
-            <if test="createdAt != null">#{createdAt},</if>
-            <if test="updatedAt != null">#{updatedAt},</if>
+           now(),
+            now()
          </trim>
     </insert>
 

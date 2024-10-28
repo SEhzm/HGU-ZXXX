@@ -142,8 +142,8 @@
                     <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)"
                                v-hasPermi="['course:course:remove']">删除
                     </el-button>
-                    <el-button link type="primary"  @click="handleSelect(scope.row)" v-if="!scope.row.isSelect">
-                        选课
+                    <el-button link type="primary" @click="Upload(scope.row)">
+                        上传章节
                     </el-button>
                 </template>
             </el-table-column>
@@ -209,17 +209,46 @@
                 </div>
             </template>
         </el-dialog>
+
+
+        <!--        添加章节弹框-->
+        <el-dialog :title="title" v-model="openupload" width="500px" append-to-body>
+            <el-form ref="chaptersRef" :model="form" :rules="rules" label-width="80px">
+                <el-form-item label="课程id" prop="courseId">
+                    <el-input disabled v-model="form.courseId" placeholder=""/>
+                </el-form-item>
+                <el-form-item label="章节标题" prop="chapterTitle">
+                    <el-input v-model="form.chapterTitle" placeholder="请输入章节标题"/>
+                </el-form-item>
+                <el-form-item label="章节描述" prop="chapterDescription">
+                    <el-input v-model="form.chapterDescription" placeholder="请输入章节描述"/>
+                </el-form-item>
+                <el-form-item label="视频链接" prop="videoUrl">
+                    <el-input v-model="form.videoUrl" placeholder="请输入视频链接"/>
+                </el-form-item>
+                <el-form-item label="章节顺序" prop="position">
+                    <el-input v-model="form.position" placeholder="请输入章节顺序"/>
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <div class="dialog-footer">
+                    <el-button type="primary" @click="submitupload">确 定</el-button>
+                    <el-button @click="cancel">取 消</el-button>
+                </div>
+            </template>
+        </el-dialog>
     </div>
 </template>
 
 <script setup name="Course">
-import {listCourse, getCourse, delCourse,selectCourse, addCourse, updateCourse} from "@/api/course/course";
+import {listCourse, addChapters ,getCourse, delCourse, addCourse, updateCourse} from "@/api/course/course";
 
 const {proxy} = getCurrentInstance();
 const {course_category} = proxy.useDict('course_category');
 
 const courseList = ref([]);
 const open = ref(false);
+const openupload = ref(false);
 const loading = ref(true);
 const showSearch = ref(true);
 const ids = ref([]);
@@ -240,6 +269,12 @@ const data = reactive({
         updatedAt: null,
         teacher: null,
         courseCategory: null,
+        chapterId: null,
+        courseId: null,
+        chapterTitle: null,
+        chapterDescription: null,
+        videoUrl: null,
+        position: null,
     },
     rules: {}
 });
@@ -258,6 +293,7 @@ function getList() {
 
 // 取消按钮
 function cancel() {
+    openupload.value = false
     open.value = false;
     reset();
 }
@@ -347,17 +383,25 @@ function handleDelete(row) {
     }).catch(() => {
     });
 }
-/** 选课按钮操作 */
-function handleSelect(row) {
-    const _courseIds = row.courseId || ids.value;
-    proxy.$modal.confirm('是否确认选择编号为"' + _courseIds + '"的课？').then(function () {
-        return selectCourse(_courseIds);
-    }).then(() => {
+
+/** 上传章节按钮操作 */
+function Upload(row) {
+    reset();
+    // console.log(row);
+    openupload.value = true;
+    this.form.courseId = row.courseId;
+}
+
+/** 上传章节弹框的提交按钮 */
+function submitupload() {
+    console.log(form.value)
+    addChapters(form.value).then(response => {
+        proxy.$modal.msgSuccess("新增成功");
+        openupload.value = false;
         getList();
-        proxy.$modal.msgSuccess("选课成功");
-    }).catch(() => {
     });
 }
+
 
 /** 导出按钮操作 */
 function handleExport() {

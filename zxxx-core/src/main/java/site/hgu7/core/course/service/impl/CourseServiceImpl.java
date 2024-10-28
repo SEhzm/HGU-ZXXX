@@ -1,8 +1,11 @@
 package site.hgu7.core.course.service.impl;
 
 import java.util.List;
+
+import org.apache.catalina.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import site.hgu7.common.utils.SecurityUtils;
 import site.hgu7.core.course.mapper.CourseMapper;
 import site.hgu7.core.course.domain.Course;
 import site.hgu7.core.course.service.ICourseService;
@@ -40,7 +43,12 @@ public class CourseServiceImpl implements ICourseService
     @Override
     public List<Course> selectCourseList(Course course)
     {
-        return courseMapper.selectCourseList(course);
+        List<Course> courses = courseMapper.selectCourseList(course);
+        for (Course cours : courses) {
+            Integer courseId = cours.getCourseId();
+            cours.setIsSelect(courseMapper.getIsSelect(courseId,SecurityUtils.getUserId()));
+        }
+        return courses;
     }
 
     /**
@@ -90,4 +98,6 @@ public class CourseServiceImpl implements ICourseService
     {
         return courseMapper.deleteCourseByCourseId(courseId);
     }
+
+
 }

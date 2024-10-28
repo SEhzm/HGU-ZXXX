@@ -62,4 +62,5 @@ public class Course extends BaseEntity
     @Excel(name = "课程封面")
     private String courseImg;
 
+    private Boolean isSelect;
 }

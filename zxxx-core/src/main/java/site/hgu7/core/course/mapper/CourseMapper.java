@@ -1,6 +1,9 @@
 package site.hgu7.core.course.mapper;
 
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import site.hgu7.core.course.domain.Course;
 
 /**
@@ -9,6 +12,7 @@ import site.hgu7.core.course.domain.Course;
  * @author hzm
  * @date 2024-10-27
  */
+@Mapper
 public interface CourseMapper 
 {
     /**
@@ -58,4 +62,7 @@ public interface CourseMapper
      * @return 结果
      */
     public int deleteCourseByCourseIds(Integer[] courseIds);
+
+    @Select("SELECT EXISTS(SELECT 1 FROM course_enrollments WHERE course_id = #{courseId} AND user_id = #{userId})")
+    Boolean getIsSelect(Integer courseId,Long userId);
 }

@@ -64,6 +64,17 @@ public interface CourseEnrollmentsMapper
      */
     public int deleteCourseEnrollmentsByEnrollmentIds(Integer[] enrollmentIds);
 
+    /**
+     * 根据课程id查课程名
+     * @param courseId
+     * @return
+     */
     @Select("select course_name from course where course_id=#{courseId}")
     String selectCourseNamesByIds(Integer courseId);
+    /**
+     * 选课
+     * @param courseId
+     * @return
+     */
+    int selectCourse(Integer courseId,Long userId);
 }

@@ -130,7 +130,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -230,6 +230,7 @@ function getList() {
 
 // 取消按钮
 function cancel() {
+
   open.value = false;
   reset();
 }

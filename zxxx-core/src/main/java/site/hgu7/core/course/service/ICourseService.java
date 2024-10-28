@@ -58,4 +58,6 @@ public interface ICourseService
      * @return 结果
      */
     public int deleteCourseByCourseId(Integer courseId);
+
+
 }

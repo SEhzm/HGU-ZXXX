@@ -115,4 +115,13 @@ public class CourseEnrollmentsController extends BaseController
     {
         return toAjax(courseEnrollmentsService.deleteCourseEnrollmentsByEnrollmentIds(enrollmentIds));
     }
+
+    /**
+     * 选择course,选课
+     */
+    @GetMapping("/selectCourse/{courseId}")
+    public AjaxResult selectCourse(@PathVariable Integer courseId)
+    {
+        return toAjax(courseEnrollmentsService.selectCourse(courseId));
+    }
 }

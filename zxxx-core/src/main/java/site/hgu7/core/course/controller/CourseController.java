@@ -101,4 +101,7 @@ public class CourseController extends BaseController
     {
         return toAjax(courseService.deleteCourseByCourseIds(courseIds));
     }
+
+
+
 }

@@ -75,4 +75,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{enrollmentId}
         </foreach>
     </delete>
+    <insert id="selectCourse" parameterType="map">
+        insert into course_enrollments (course_id, user_id,enrollment_date)
+        values (#{courseId},#{userId, jdbcType=BIGINT},now())
+    </insert>
 </mapper>

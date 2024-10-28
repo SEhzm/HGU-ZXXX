@@ -1,0 +1,89 @@
+<template>
+    <div class="course-all">
+        <img :src=data.courseImg alt="" class="course-img">
+        <div class="course-info">
+            <span style="font-size: 30px">{{ data.courseName }}</span>
+            <p>开课时间：{{ data.createdAt }}</p>
+            <br>
+            <p>学习方式：在线学习</p>
+            <br>
+            <el-button type="primary">立即学习</el-button>
+        </div>
+
+    </div>
+    <div >
+        课程简介
+    </div>
+</template>
+
+<script setup>
+import {ref, onMounted, watch} from 'vue';
+import {useRoute} from "vue-router";
+import {getCourse} from '@/api/course/course';
+
+const route = useRoute();
+const courseId = ref(null);
+
+const data = ref([]);
+
+onMounted(async () => {
+    // 获取查询参数中的 courseId
+    const id = route.query.courseId;
+    if (id) {
+        courseId.value = id;
+    }
+    // 在 courseId 被初始化后调用 getCourseDetail
+    if (courseId.value) {
+        await getCourseDetail(courseId.value);
+    }
+});
+
+const getCourseDetail = async (courseId) => {
+    try {
+        const res = await getCourse(courseId);
+        data.value = res.data;
+        // console.log(data)
+        // 处理响应数据
+    } catch (error) {
+    }
+};
+
+// // 监听 courseId 的变化
+watch(courseId, (newId) => {
+    if (newId) {
+        getCourseDetail(newId);
+    }
+});
+</script>
+
+<style scoped>
+@media (min-width: 601px) {
+    .course-all{
+        display: flex;
+    }
+    .course-img {
+        margin-left: 100px;
+        margin-top: 100px;
+        width: 500px;
+    }
+
+    .course-info {
+        width: 1000px;
+        margin-left: 50px;
+        margin-top: 100px;
+
+    }
+}
+
+@media (max-width: 600px) {
+    .course-img {
+        width: 100vw;
+
+    }
+
+    .course-info {
+
+    }
+}
+
+</style>

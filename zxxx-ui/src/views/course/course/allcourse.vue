@@ -394,7 +394,7 @@ function Upload(row) {
 
 /** 上传章节弹框的提交按钮 */
 function submitupload() {
-    console.log(form.value)
+    // console.log(form.value)
     addChapters(form.value).then(response => {
         proxy.$modal.msgSuccess("新增成功");
         openupload.value = false;

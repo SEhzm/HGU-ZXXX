@@ -103,6 +103,7 @@
         </template>
       </el-table-column>
       <el-table-column label="章节id" align="center" prop="chapterId" />
+      <el-table-column label="讲师" align="center" prop="teacher" />
       <el-table-column label="课程状态" align="center" prop="courseStatus">
         <template #default="scope">
           <dict-tag :options="course_status" :value="scope.row.courseStatus"/>
@@ -165,8 +166,8 @@
 </template>
 
 <script setup name="Enrollments">
-import { listEnrollments, getEnrollments, delEnrollments, addEnrollments, updateEnrollments } from "@/api/course/enrollments";
-import {myListEnrollments} from "../../../api/course/enrollments.js";
+import { listEnrollments, getEnrollments, delEnrollments,myListEnrollments, addEnrollments, updateEnrollments } from "@/api/course/enrollments";
+
 
 const { proxy } = getCurrentInstance();
 const { course_status } = proxy.useDict('course_status');

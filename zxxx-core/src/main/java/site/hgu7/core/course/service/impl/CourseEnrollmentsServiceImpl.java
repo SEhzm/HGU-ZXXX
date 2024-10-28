@@ -48,22 +48,11 @@ public class CourseEnrollmentsServiceImpl implements ICourseEnrollmentsService
     {
         List<CourseEnrollments> enrollments = courseEnrollmentsMapper.selectCourseEnrollmentsList(courseEnrollments);
         // 提取所有课程ID
-        List<Integer> courseIds = enrollments.stream()
-                .map(CourseEnrollments::getCourseId)
-                .distinct()
-                .collect(Collectors.toList());
-
-        Map<Integer, String> courseNameMap = new HashMap<>();
-        for (Integer courseId : courseIds) {
-            String courseName = courseEnrollmentsMapper.selectCourseNamesByIds(courseId);
-            courseNameMap.put(courseId,courseName);
-        }
-
-        // 遍历每个报名记录，设置课程名称
         for (CourseEnrollments enrollment : enrollments) {
-            Integer courseId = enrollment.getCourseId();
-            String courseName = courseNameMap.get(courseId);
+            String courseName = courseEnrollmentsMapper.selectCourseNamesByIds(enrollment.getCourseId());
+            String courseTeacher = courseEnrollmentsMapper.selectCourseTeacherByIds(enrollment.getCourseId());
             enrollment.setCourseName(courseName);
+            enrollment.setTeacher(courseTeacher);
         }
         return enrollments;
     }

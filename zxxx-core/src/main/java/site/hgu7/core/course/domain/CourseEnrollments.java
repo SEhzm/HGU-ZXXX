@@ -26,7 +26,11 @@ public class CourseEnrollments extends BaseEntity
     @Excel(name = "课程id")
     private Integer courseId;
 
-//    课程名
+    /** 讲师 */
+    @Excel(name = "讲师")
+    private String teacher;
+
+    //课程名
     @Excel(name = "课程名")
     private String courseName;
 

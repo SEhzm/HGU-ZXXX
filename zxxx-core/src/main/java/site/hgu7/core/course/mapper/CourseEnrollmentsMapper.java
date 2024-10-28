@@ -72,6 +72,13 @@ public interface CourseEnrollmentsMapper
     @Select("select course_name from course where course_id=#{courseId}")
     String selectCourseNamesByIds(Integer courseId);
     /**
+     * 根据课程id查讲师
+     * @param courseId
+     * @return
+     */
+    @Select("select teacher from course where course_id=#{courseId}")
+    String selectCourseTeacherByIds(Integer courseId);
+    /**
      * 选课
      * @param courseId
      * @return

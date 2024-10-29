@@ -2,6 +2,7 @@ package site.hgu7.core.course.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,22 +16,23 @@ import org.springframework.web.bind.annotation.RestController;
 import site.hgu7.common.annotation.Log;
 import site.hgu7.common.core.controller.BaseController;
 import site.hgu7.common.core.domain.AjaxResult;
+import site.hgu7.common.core.domain.R;
 import site.hgu7.common.enums.BusinessType;
 import site.hgu7.core.course.domain.Course;
 import site.hgu7.core.course.service.ICourseService;
 import site.hgu7.common.utils.poi.ExcelUtil;
 import site.hgu7.common.core.page.TableDataInfo;
 
+
 /**
  * courseController
- * 
+ *
  * @author hzm
  * @date 2024-10-27
  */
 @RestController
 @RequestMapping("/course/course")
-public class CourseController extends BaseController
-{
+public class CourseController extends BaseController {
     @Autowired
     private ICourseService courseService;
 
@@ -39,8 +41,7 @@ public class CourseController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('course:course:list')")
     @GetMapping("/list")
-    public TableDataInfo list(Course course)
-    {
+    public TableDataInfo list(Course course) {
         startPage();
         List<Course> list = courseService.selectCourseList(course);
         return getDataTable(list);
@@ -52,8 +53,7 @@ public class CourseController extends BaseController
     @PreAuthorize("@ss.hasPermi('course:course:export')")
     @Log(title = "course", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, Course course)
-    {
+    public void export(HttpServletResponse response, Course course) {
         List<Course> list = courseService.selectCourseList(course);
         ExcelUtil<Course> util = new ExcelUtil<Course>(Course.class);
         util.exportExcel(response, list, "course数据");
@@ -64,8 +64,7 @@ public class CourseController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('course:course:query')")
     @GetMapping(value = "/{courseId}")
-    public AjaxResult getInfo(@PathVariable("courseId") Integer courseId)
-    {
+    public AjaxResult getInfo(@PathVariable("courseId") Integer courseId) {
         return success(courseService.selectCourseByCourseId(courseId));
     }
 
@@ -75,8 +74,7 @@ public class CourseController extends BaseController
     @PreAuthorize("@ss.hasPermi('course:course:add')")
     @Log(title = "course", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody Course course)
-    {
+    public AjaxResult add(@RequestBody Course course) {
         return toAjax(courseService.insertCourse(course));
     }
 
@@ -86,8 +84,7 @@ public class CourseController extends BaseController
     @PreAuthorize("@ss.hasPermi('course:course:edit')")
     @Log(title = "course", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody Course course)
-    {
+    public AjaxResult edit(@RequestBody Course course) {
         return toAjax(courseService.updateCourse(course));
     }
 
@@ -96,12 +93,12 @@ public class CourseController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('course:course:remove')")
     @Log(title = "course", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{courseIds}")
-    public AjaxResult remove(@PathVariable Integer[] courseIds)
-    {
+    @DeleteMapping("/{courseIds}")
+    public AjaxResult remove(@PathVariable Integer[] courseIds) {
         return toAjax(courseService.deleteCourseByCourseIds(courseIds));
     }
 
 
 
 }
+

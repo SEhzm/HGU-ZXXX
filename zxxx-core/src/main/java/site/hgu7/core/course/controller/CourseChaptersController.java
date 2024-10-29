@@ -2,6 +2,7 @@ package site.hgu7.core.course.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import site.hgu7.common.annotation.Log;
 import site.hgu7.common.core.controller.BaseController;
 import site.hgu7.common.core.domain.AjaxResult;
+import site.hgu7.common.core.domain.R;
+import site.hgu7.common.domain.Result;
 import site.hgu7.common.enums.BusinessType;
 import site.hgu7.core.course.domain.CourseChapters;
 import site.hgu7.core.course.service.ICourseChaptersService;
@@ -23,14 +26,13 @@ import site.hgu7.common.core.page.TableDataInfo;
 
 /**
  * course_chaptersController
- * 
+ *
  * @author hzm
  * @date 2024-10-27
  */
 @RestController
 @RequestMapping("/course/chapters")
-public class CourseChaptersController extends BaseController
-{
+public class CourseChaptersController extends BaseController {
     @Autowired
     private ICourseChaptersService courseChaptersService;
 
@@ -39,8 +41,7 @@ public class CourseChaptersController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('course:chapters:list')")
     @GetMapping("/list")
-    public TableDataInfo list(CourseChapters courseChapters)
-    {
+    public TableDataInfo list(CourseChapters courseChapters) {
         startPage();
         List<CourseChapters> list = courseChaptersService.selectCourseChaptersList(courseChapters);
         return getDataTable(list);
@@ -52,8 +53,7 @@ public class CourseChaptersController extends BaseController
     @PreAuthorize("@ss.hasPermi('course:chapters:export')")
     @Log(title = "course_chapters", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, CourseChapters courseChapters)
-    {
+    public void export(HttpServletResponse response, CourseChapters courseChapters) {
         List<CourseChapters> list = courseChaptersService.selectCourseChaptersList(courseChapters);
         ExcelUtil<CourseChapters> util = new ExcelUtil<CourseChapters>(CourseChapters.class);
         util.exportExcel(response, list, "course_chapters数据");
@@ -64,8 +64,7 @@ public class CourseChaptersController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('course:chapters:query')")
     @GetMapping(value = "/{chapterId}")
-    public AjaxResult getInfo(@PathVariable("chapterId") Integer chapterId)
-    {
+    public AjaxResult getChaptersInfo(@PathVariable("chapterId") Integer chapterId) {
         return success(courseChaptersService.selectCourseChaptersByChapterId(chapterId));
     }
 
@@ -75,8 +74,7 @@ public class CourseChaptersController extends BaseController
     @PreAuthorize("@ss.hasPermi('course:chapters:add')")
     @Log(title = "course_chapters", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody CourseChapters courseChapters)
-    {
+    public AjaxResult add(@RequestBody CourseChapters courseChapters) {
         return toAjax(courseChaptersService.insertCourseChapters(courseChapters));
     }
 
@@ -86,8 +84,7 @@ public class CourseChaptersController extends BaseController
     @PreAuthorize("@ss.hasPermi('course:chapters:edit')")
     @Log(title = "course_chapters", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody CourseChapters courseChapters)
-    {
+    public AjaxResult edit(@RequestBody CourseChapters courseChapters) {
         return toAjax(courseChaptersService.updateCourseChapters(courseChapters));
     }
 
@@ -96,9 +93,17 @@ public class CourseChaptersController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('course:chapters:remove')")
     @Log(title = "course_chapters", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{chapterIds}")
-    public AjaxResult remove(@PathVariable Integer[] chapterIds)
-    {
+    @DeleteMapping("/{chapterIds}")
+    public AjaxResult remove(@PathVariable Integer[] chapterIds) {
         return toAjax(courseChaptersService.deleteCourseChaptersByChapterIds(chapterIds));
+    }
+
+
+    /**
+     * 获取course_chapters详细信息
+     */
+    @GetMapping(value = "/getChaptersInfoByChapterId/{chapterId}")
+    public R getChaptersInfoByChapterId(@PathVariable("chapterId") Integer chapterId) {
+        return R.ok(courseChaptersService.getChaptersInfoByChapterId(chapterId));
     }
 }

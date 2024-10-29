@@ -60,4 +60,6 @@ public interface ICourseEnrollmentsService
     public int deleteCourseEnrollmentsByEnrollmentId(Integer enrollmentId);
 
     int selectCourse(Integer courseIds);
+
+    Integer getCourseStudyTotal(Integer courseId);
 }

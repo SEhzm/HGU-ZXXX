@@ -34,6 +34,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where enrollment_id = #{enrollmentId}
     </select>
 
+    <select id="getCourseStudyTotal" resultType="java.lang.Integer">
+        SELECT
+            COUNT(DISTINCT user_id) AS total_students
+        FROM
+            course_enrollments
+        WHERE
+            course_id = #{courseId}
+    </select>
+
 
     <insert id="insertCourseEnrollments" parameterType="CourseEnrollments" useGeneratedKeys="true" keyProperty="enrollmentId">
         insert into course_enrollments

@@ -16,6 +16,13 @@ export function getChapters(chapterId) {
     method: 'get'
   })
 }
+// 查询course_chapters详细
+export function getChaptersInfoByChapterId(chapterId) {
+  return request({
+    url: '/course/chapters/getChaptersInfoByChapterId/' + chapterId,
+    method: 'get'
+  })
+}
 
 // 新增course_chapters
 export function addChapters(data) {

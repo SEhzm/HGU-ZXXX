@@ -109,4 +109,9 @@ public class CourseEnrollmentsServiceImpl implements ICourseEnrollmentsService
         Long userId = SecurityUtils.getUserId();
         return courseEnrollmentsMapper.selectCourse(courseIds,userId);
     }
+
+    @Override
+    public Integer getCourseStudyTotal(Integer courseId) {
+        return courseEnrollmentsMapper.getCourseStudyTotal(courseId);
+    }
 }

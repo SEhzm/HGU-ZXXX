@@ -16,6 +16,20 @@ export function myListEnrollments(query) {
     params: query
   })
 }
+//根据课程号，userid，查出章节号
+export function getChaptersIdByCourseId(courseId) {
+  return request({
+    url: '/course/enrollments/getChaptersIdByCourseId?courseId='+courseId,
+    method: 'get',
+  })
+}
+//根据课号查选课人数
+export function getCourseStudyTotal(courseId) {
+  return request({
+    url: `/course/enrollments/getCourseStudyTotal?courseId=${courseId}`,
+    method: 'get',
+  })
+}
 
 // 查询course_enrollments详细
 export function getEnrollments(enrollmentId) {

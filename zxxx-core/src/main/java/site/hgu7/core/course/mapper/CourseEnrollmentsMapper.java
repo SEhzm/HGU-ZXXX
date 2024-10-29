@@ -84,4 +84,9 @@ public interface CourseEnrollmentsMapper
      * @return
      */
     int selectCourse(Integer courseId,Long userId);
+    /**
+     * 获取课程总的选课人数
+     * @return
+     */
+    Integer getCourseStudyTotal(Integer courseId);
 }

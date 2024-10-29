@@ -44,8 +44,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="courseName != null">course_name,</if>
             <if test="courseDescription != null">course_description,</if>
             <if test="userId != null">user_id,</if>
-            <if test="createdAt != null">created_at,</if>
-            <if test="updatedAt != null">updated_at,</if>
+            created_at,
+            updated_at,
             <if test="teacher != null">teacher,</if>
             <if test="courseCategory != null">course_category,</if>
             <if test="courseImg != null">course_img,</if>
@@ -54,8 +54,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="courseName != null">#{courseName},</if>
             <if test="courseDescription != null">#{courseDescription},</if>
             <if test="userId != null">#{userId},</if>
-            <if test="createdAt != null">#{createdAt},</if>
-            <if test="updatedAt != null">#{updatedAt},</if>
+            now(),
+            now(),
             <if test="teacher != null">#{teacher},</if>
             <if test="courseCategory != null">#{courseCategory},</if>
             <if test="courseImg != null">#{courseImg},</if>
@@ -69,7 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="courseDescription != null">course_description = #{courseDescription},</if>
             <if test="userId != null">user_id = #{userId},</if>
             <if test="createdAt != null">created_at = #{createdAt},</if>
-            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+            updated_at = now(),
             <if test="teacher != null">teacher = #{teacher},</if>
             <if test="courseCategory != null">course_category = #{courseCategory},</if>
             <if test="courseImg != null">course_img = #{courseImg},</if>

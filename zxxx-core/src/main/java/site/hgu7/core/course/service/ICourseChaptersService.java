@@ -58,4 +58,6 @@ public interface ICourseChaptersService
      * @return 结果
      */
     public int deleteCourseChaptersByChapterId(Integer chapterId);
+
+    CourseChapters getChaptersInfoByChapterId(Integer chapterId);
 }

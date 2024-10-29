@@ -157,22 +157,8 @@
         <el-form-item label="章节顺序" prop="position">
           <el-input v-model="form.position" placeholder="请输入章节顺序" />
         </el-form-item>
-        <el-form-item label="创建时间" prop="createdAt">
-          <el-date-picker clearable
-            v-model="form.createdAt"
-            type="date"
-            value-format="YYYY-MM-DD"
-            placeholder="请选择创建时间">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="更新时间" prop="updatedAt">
-          <el-date-picker clearable
-            v-model="form.updatedAt"
-            type="date"
-            value-format="YYYY-MM-DD"
-            placeholder="请选择更新时间">
-          </el-date-picker>
-        </el-form-item>
+
+
       </el-form>
       <template #footer>
         <div class="dialog-footer">

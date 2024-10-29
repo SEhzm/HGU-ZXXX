@@ -90,4 +90,9 @@ public class CourseChaptersServiceImpl implements ICourseChaptersService
     {
         return courseChaptersMapper.deleteCourseChaptersByChapterId(chapterId);
     }
+
+    @Override
+    public CourseChapters getChaptersInfoByChapterId(Integer chapterId) {
+        return courseChaptersMapper.getChaptersInfoByChapterId(chapterId);
+    }
 }

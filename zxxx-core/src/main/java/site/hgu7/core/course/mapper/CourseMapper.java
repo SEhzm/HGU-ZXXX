@@ -63,6 +63,29 @@ public interface CourseMapper
      */
     public int deleteCourseByCourseIds(Integer[] courseIds);
 
-    @Select("SELECT EXISTS(SELECT 1 FROM course_enrollments WHERE course_id = #{courseId} AND user_id = #{userId})")
+    /**
+     * 判断是否已选课
+     * @param courseId
+     * @param userId
+     * @return
+     */
     Boolean getIsSelect(Integer courseId,Long userId);
+
+    /**
+     * 获取轮播图课程id
+     * @return List
+     */
+    List<Integer> getCaruCourseId();
+
+    /**
+     * 获取推荐课程id
+     * @return
+     */
+    List<Integer> getFindCourseId();
+
+    /**
+     * 获取精品课程id
+     * @return
+     */
+    List<Integer> getRecommendCourseId();
 }

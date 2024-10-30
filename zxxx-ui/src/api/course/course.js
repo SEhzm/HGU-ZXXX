@@ -16,6 +16,13 @@ export function getCourse(courseId) {
     method: 'get'
   })
 }
+// 查询首页轮播图，推荐，精品课的课程号
+export function getHomeCourse() {
+  return request({
+    url: '/course/course/getHomeCourse',
+    method: 'get'
+  })
+}
 
 // 新增course
 export function addCourse(data) {
@@ -52,7 +59,6 @@ export function selectCourse(courseId) {
 
 // 新增course_chapters章节
 export function addChapters(data) {
-  console.log("1111")
   return request({
     url: '/course/chapters',
     method: 'post',

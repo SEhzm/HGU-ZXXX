@@ -1,49 +1,124 @@
 <template>
-  <div class="app-container home">
-      <div class="carou">
-          <el-carousel arrow="always" :interval="2000" autoplay>
-              <el-carousel-item v-for="(item, index) in carouselData" :key="index">
-                  <img :src="item.url" alt="轮播图" class="carousel-image">
-              </el-carousel-item>
-          </el-carousel>
-          <div style="font-size: 25px;margin-top: 40px">推荐
-                <div>
-                    <img src="" alt="">
+    <div class="app-container home">
+        <div class="carou">
+            <el-carousel arrow="always" :interval="2000" autoplay>
+                <el-carousel-item v-for="(item, index) in carouselData.caruCourseId" :key="index"
+                                  @click="goToCourse(item.courseId)">
+                    <img :src="item.courseImg" alt="轮播图" class="carousel-image">
+                </el-carousel-item>
+            </el-carousel>
+        </div>
+        <!--        推荐课程-->
+        <p style="margin-left: 150px;font-size: 25px;font-family: 'Microsoft YaHei';">推荐课程</p>
+        <div class="course-list">
+            <div v-if="homeCourseInfo.value && homeCourseInfo.value.caruCourseId"
+                 v-for="(row, index) in homeCourseInfo.value.caruCourseId" :key="index"
+                 @click="goToCourse(row.courseId)"
+                 class="course-box" :style="{ backgroundImage: `url(${row.courseImg})` ,opacity:0.9}">
+                <div style="display: flex">
+                    <el-tag effect="dark" round type="success" class="tag" style="color: black">{{ row.courseName }}</el-tag>
+                    <el-tag round class="tag">{{ row.teacher }}</el-tag>
+                    <span class="enrollment-date">{{ row.enrollmentDate }}</span>
                 </div>
-          </div>
-      </div>
-  </div>
+            </div>
+        </div>
+        <!--        精品课程-->
+        <p style="margin-left: 150px;font-size: 25px;font-family: 'Microsoft YaHei';">精品课程</p>
+        <div class="course-list">
+            <div v-if="homeCourseInfo.value && homeCourseInfo.value.findCourseId"
+                 v-for="(row, index) in homeCourseInfo.value.findCourseId" :key="index"
+                 @click="goToCourse(row.courseId)"
+                 class="course-box" :style="{ backgroundImage: `url(${row.courseImg})` ,opacity:0.9}">
+                <div style="display: flex">
+                    <el-tag effect="dark" round type="success" class="tag" style="color: black">{{ row.courseName }}</el-tag>
+                    <el-tag effect="dark" round class="tag">{{ row.teacher }}
+                    </el-tag>
+                    <el-tag effect="dark" round class="shiny-gold-tag">精品课程</el-tag>
+                    <span class="enrollment-date">{{ row.enrollmentDate }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script setup>
 
-import {ref} from 'vue';
+import {ref, reactive, onMounted} from 'vue';
 import {getCourse} from '@/api/course/course';
-const carouselData = ref([
-    {url: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.fK7K5Lvtke9pBIs-x0hN_wHaEY?w=290&h=180&c=7&r=0&o=5&pid=1.7'},
-    {url: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.3_oGuKFIx9tjtiymYgijWwHaEo?w=263&h=180&c=7&r=0&o=5&pid=1.7'},
-    {url: 'https://tse3-mm.cn.bing.net/th/id/OIP-C.W89FVAuldBahnyfGq96HsAHaEK?w=306&h=180&c=7&r=0&o=5&pid=1.7'},
-    {url: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.eYHEu6KQghISczSpd2qixwHaEo?w=313&h=195&c=7&r=0&o=5&pid=1.7'},
-])
+import {getHomeCourse} from "../api/course/course.js";
+import {useRouter} from "vue-router";
 
-getCourse().then(res=>{
+const router = useRouter();
+const homeCourseInfo = reactive({
+    caruCourseId: [],
+    findCourseId: [],
+    recommendCourseId: []
+})
 
-});
+const carouselData = reactive({
+    caruCourseId: []
+})
+//跳转课程页面
+const goToCourse = (courseId) => {
+    // console.log(item)
+    router.push(`/study/show?courseId=${courseId}`)
+}
+
+onMounted(async () => {
+    await getHomeCourse().then(res => {
+        homeCourseInfo.value = res.data;
+        console.log(homeCourseInfo.value.recommendCourseId);
+        carouselData.caruCourseId = homeCourseInfo.value.caruCourseId;
+    });
+})
 
 
 </script>
 <style lang="scss" scoped>
 .carousel-image {
+
     width: 100%;
     height: 100%;
 }
 
-:deep .el-carousel__arrow i {
+:deep .el-carousel__arrow i { /* 增大箭头 */
     font-size: 40px !important;
-    /* 增大箭头 */
 }
 
 @media (min-width: 601px) {
+    .tag {
+        margin-left: 30px;
+        margin-top: 10px;
+        font-size: 18px;
+        font-weight: 600;
+    }
+    .course-list {
+        color: black;
+        width: 1500px;
+        margin-left: 100px;
+        margin-top: 15px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+    .course-box {
+        display: flex;
+        cursor: pointer;
+        color: #FFFFFF;
+        margin-left: 50px;
+        width: 400px;
+        height: 200px;
+        border: 1px solid #ccc;
+        margin-bottom: 50px;
+        border-radius: 8px;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .course-content {
+        margin-left: 20px;
+        align-items: center;
+    }
     :deep .el-carousel__indicators--horizontal {
         position: absolute;
         text-align: right;
@@ -66,8 +141,9 @@ getCourse().then(res=>{
     }
 
     .carou {
-        position: fixed;
-        width: 50%;
+        cursor: pointer;
+        position: relative;
+        width: 900px;
         margin-left: 280px;
         margin-top: 120px;
     }
@@ -77,6 +153,29 @@ getCourse().then(res=>{
         color: #2E95FB !important;
         background: linear-gradient(270deg, #F2F7FC 0%, #FEFEFE 100%) !important;
     }
+    .shiny-gold-tag {
+        border: 0px;
+        color: black; /* 将字体颜色设置为黑色 */
+        margin-left: 30px;
+        margin-top: 10px;
+        font-size: 17px;
+        padding: 5px 10px;
+        border-radius: 5px;
+        background-image: linear-gradient(45deg, #FFD700, #FFAA00, #FFFF99, #FFEE00);
+        background-size: 200% 200%;
+        animation: gradientShift 3s ease-in-out infinite; /* 仅保持渐变动画 */
+        font-weight: 700;
+    }
+
+    /* 渐变背景平滑移动 */
+    @keyframes gradientShift {
+        0% {
+            background-position: 0% 50%;
+        }
+        100% {
+            background-position: 100% 50%;
+        }
+    }
 }
 
 @media (max-width: 600px) {
@@ -84,7 +183,6 @@ getCourse().then(res=>{
         display: none;
     }
 }
-
 
 
 </style>

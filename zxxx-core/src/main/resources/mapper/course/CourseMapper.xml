@@ -32,10 +32,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="courseCategory != null  and courseCategory != ''"> and course_category = #{courseCategory}</if>
         </where>
     </select>
-    
+
     <select id="selectCourseByCourseId" parameterType="Integer" resultMap="CourseResult">
         <include refid="selectCourseVo"/>
         where course_id = #{courseId}
+    </select>
+    <select id="getIsSelect" resultType="java.lang.Boolean">
+        SELECT EXISTS(SELECT 1 FROM course_enrollments WHERE course_id = #{courseId} AND user_id = #{userId})
+    </select>
+    <select id="getCaruCourseId" resultType="java.lang.Integer">
+        select CaruCourseId from caru_course
+    </select>
+    <select id="getFindCourseId" resultType="java.lang.Integer">
+        select findCourseId from fine_course
+    </select>
+    <select id="getRecommendCourseId" resultType="java.lang.Integer">
+        select recommendCourseId from recommend_course
     </select>
 
     <insert id="insertCourse" parameterType="Course" useGeneratedKeys="true" keyProperty="courseId">

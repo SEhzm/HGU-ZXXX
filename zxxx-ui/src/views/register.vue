@@ -1,5 +1,6 @@
 <template>
   <div class="register">
+      <img src="@/assets/images/study.png" style="position: relative;right:200px">
     <el-form ref="registerRef" :model="registerForm" :rules="registerRules" class="register-form">
       <h3 class="title">河北地质大学在线学习平台</h3>
       <el-form-item prop="username">
@@ -70,7 +71,7 @@
     </el-form>
     <!--  底部  -->
     <div class="el-register-footer">
-      <span>Copyright © 2024 hgu7.site All Rights Reserved.</span>
+      <span>Copyright © 2024 圆桌组 All Rights Reserved.</span>
     </div>
   </div>
 </template>
@@ -160,8 +161,8 @@ getCode();
   justify-content: center;
   align-items: center;
   height: 100%;
-  background-image:linear-gradient(136deg,#4C83FF 140%,#2AFADF 10%);
-  background-size: cover;
+    background-image:linear-gradient(136deg,#2AFADF 10%,#4C83FF 140%);
+    background-size: cover;
 }
 .title {
   margin: 0px auto 30px auto;
@@ -207,7 +208,7 @@ getCode();
   bottom: 0;
   width: 100%;
   text-align: center;
-  color: #fff;
+  color: #000000;
   font-family: Arial;
   font-size: 12px;
   letter-spacing: 1px;

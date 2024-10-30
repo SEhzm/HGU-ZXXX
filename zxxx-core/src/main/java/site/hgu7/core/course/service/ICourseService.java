@@ -2,6 +2,7 @@ package site.hgu7.core.course.service;
 
 import java.util.List;
 import site.hgu7.core.course.domain.Course;
+import site.hgu7.core.course.domain.HomeCourse;
 
 /**
  * courseService接口
@@ -59,7 +60,9 @@ public interface ICourseService
      */
     public int deleteCourseByCourseId(Integer courseId);
 
-
-    List<Integer> getHomeCourseIdInfo();
-
+    /**
+     * 获取首页轮播图,推荐,精品课的课程id
+     * @return
+     */
+    HomeCourse getHomeCourse();
 }

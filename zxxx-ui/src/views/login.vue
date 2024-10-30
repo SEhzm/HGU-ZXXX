@@ -50,7 +50,7 @@
           style="width:100%;"
           @click.prevent="handleLogin"
         >
-          <span v-if="!loading" style="font-size: 20px">登 录</span>
+          <span v-if="!loading" style="font-size: 20px" >登 录</span>
           <span v-else>登 录 中...</span>
         </el-button>
         <div style="float: right;" v-if="register">
@@ -95,7 +95,7 @@ const loading = ref(false);
 // 验证码开关
 const captchaEnabled = ref(true);
 // 注册开关
-const register = ref(false);
+const register = ref(true);
 const redirect = ref(undefined);
 
 watch(route, (newRoute) => {
@@ -165,7 +165,6 @@ getCookie();
 
 <style lang='scss' scoped>
 .login {
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -185,7 +184,7 @@ getCookie();
   font-size: 19px;
   background: #ffffff;
   width: 450px;
-  height: 370px;
+  height: 390px;
   padding: 25px 25px 5px 25px;
   .el-input {
     height: 40px;

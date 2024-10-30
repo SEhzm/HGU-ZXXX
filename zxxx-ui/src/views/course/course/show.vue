@@ -37,7 +37,7 @@ const router = useRouter();
 const courseId = ref(null);
 const chapterId = ref(null);
 const courseStudyTotal=ref(null)
-const data = ref([]);
+const data = ref({});
 const enrollmentInfo = ref([]);
 const chapterInfo = ref([]);
 

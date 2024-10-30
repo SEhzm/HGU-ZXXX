@@ -60,4 +60,6 @@ public interface ICourseService
     public int deleteCourseByCourseId(Integer courseId);
 
 
+    List<Integer> getHomeCourseIdInfo();
+
 }

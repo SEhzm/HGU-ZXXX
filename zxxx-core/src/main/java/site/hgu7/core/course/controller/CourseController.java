@@ -98,6 +98,30 @@ public class CourseController extends BaseController {
         return toAjax(courseService.deleteCourseByCourseIds(courseIds));
     }
 
+    /**
+     * 获取首页轮播图的课程id
+     */
+    @GetMapping("/getHomeCaruCourseId")
+    public List<Integer> getHomeCaruCourseId(){
+         List<Integer> courseIds = courseService.getHomeCourseIdInfo();
+         return courseIds;
+    }
+    /**
+     * 获取首页推荐课的课程id
+     */
+    @GetMapping("/getHomeRecommendCourseId")
+    public List<Integer> getHomeRecommendCourseId(){
+        List<Integer> courseIds = courseService.getHomeRecommendCourseId();
+        return courseIds;
+    }
+    /**
+     * 获取首页精品课的课程id
+     */
+    @GetMapping("/getHomeFineCourseId")
+    public List<Integer> getHomeFineCourseId(){
+        List<Integer> courseIds = courseService.getHomeFineCourseId();
+        return courseIds;
+    }
 
 
 }

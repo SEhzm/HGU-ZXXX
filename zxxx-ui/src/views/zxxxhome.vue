@@ -17,31 +17,31 @@
             <div class="sidebar">
                 <el-menu router style=""
                          :default-openeds="['/home', '2']">
-                    <el-menu-item index="/home">
+                    <el-menu-item index="/login">
                         <el-icon>
                             <House/>
                         </el-icon>
                         <span>首页</span>
                     </el-menu-item>
-                    <el-menu-item index="/index">
+                    <el-menu-item index="/login">
                         <el-icon>
                             <DataLine/>
                         </el-icon>
                         <span>在线学习</span>
                     </el-menu-item>
-                    <el-menu-item index="/index">
+                    <el-menu-item index="/login">
                         <el-icon>
                             <Notebook/>
                         </el-icon>
                         <span>我的课程</span>
                     </el-menu-item>
-                    <el-menu-item index="/index">
+                    <el-menu-item index="/login">
                         <el-icon>
                             <Message/>
                         </el-icon>
                         <span>通知公告</span>
                     </el-menu-item>
-                    <el-menu-item index="/index">
+                    <el-menu-item index="/login">
                         <el-icon>
                             <User/>
                         </el-icon>

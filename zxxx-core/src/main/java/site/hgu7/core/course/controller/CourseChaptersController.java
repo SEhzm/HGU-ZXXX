@@ -17,7 +17,6 @@ import site.hgu7.common.annotation.Log;
 import site.hgu7.common.core.controller.BaseController;
 import site.hgu7.common.core.domain.AjaxResult;
 import site.hgu7.common.core.domain.R;
-import site.hgu7.common.domain.Result;
 import site.hgu7.common.enums.BusinessType;
 import site.hgu7.core.course.domain.CourseChapters;
 import site.hgu7.core.course.service.ICourseChaptersService;

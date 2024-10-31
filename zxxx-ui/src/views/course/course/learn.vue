@@ -8,32 +8,44 @@
     <div class="main card">
         <div id="player"></div>
         <div class="card chat">
-            聊天区
+            <div style="height: 500px;" v-if="courseId&&chapterId">
+                <el-button @click="closeWebSocket">关闭连接</el-button>
+                <el-button @click="reconnectWebSocket">重新连接</el-button>
+                <div id="message-container" ref="messageContainer">
+                    <div v-for="(msg, index) in messages" :key="index"
+                         :class="{ 'message-bubble': true, 'mine': msg.isMine, 'others': !msg.isMine }">
+                        <span class="time">{{ msg.time }}</span>
+                        <p>{{ msg.text }}</p>
+                    </div>
+                </div>
+                <el-input id="text" type="text" v-model="message" maxlength="30" placeholder="请输入内容" />
+                <el-button v-loading="ChatRoomLoading" class="btn-animate btn-animate__vibrate" type="primary"
+                           @click="send">发送消息</el-button>
+            </div>
         </div>
     </div>
     <div class="chaptersSelect">
         <div class="card chapters">
             <span style="font-size: 21px;font-family: 黑体">章节选择</span>
-            <el-table :data="courseData.tableData" style="width: 900px;cursor:pointer" @row-click="jumpToChapter">
-                <el-table-column prop="chapterTitle" label="章节标题" width="150"/>
+            <el-table stripe :data="courseData.tableData" style="width: 980px;cursor:pointer" @row-click="jumpToChapter">
+                <el-table-column prop="chapterTitle" label="章节标题" width="280"/>
                 <el-table-column show-overflow-tooltip prop="chapterDescription" label="章节描述" width="700"/>
-                <!--                <el-table-column show-overflow-tooltip prop="chapterDescription" label="章节描述" width="50" />-->
-            </el-table>
+                </el-table>
         </div>
-        <div style="width: 40px"><!--  占位置的div  --></div>
+        <div style="width: 30px"><!--  占位置的div  --></div>
         <div class="card course-introduction"><span style="font-size: 20px">课程简介</span>
             <p>{{ data.courseDescription }}</p>
         </div>
     </div>
 </template>
 
-<script setup>
-import {ref, onMounted, watch, reactive, toRefs, computed} from 'vue';
+<script setup lang="ts">
+import {ref, onMounted, watch, reactive, toRefs, computed,onBeforeUnmount} from 'vue';
 import {useRoute, useRouter} from "vue-router";
 import {getCourse} from '@/api/course/course';
 import {listChapters, getChapters} from "@/api/course/chapters";
+import { ElMessage, ElMessageBox } from 'element-plus';
 // 引入西瓜播放器
-
 import "xgplayer/dist/index.min.css";
 import Player from 'xgplayer';
 
@@ -72,26 +84,41 @@ const {queryParams} = toRefs(courseChapters);
 
 onMounted(async () => {
     const id = route.query.courseId;
+    queryParams.value.courseId = id;
     chapterId.value = route.query.chapterId;
     courseId.value = id;
-    await getCourseDetail(courseId.value);
-    //获取章节列表
-    await listChapters(queryParams.value).then(response => {
-        courseData.tableData = response.rows;
-        console.log(courseData.tableData)
-        chaptersList.value = response.rows;
-        total.value = response.total;
-        loading.value = false;
-    });
 
-    // 获取章节视频
-    await getChapters(chapterId.value).then(res => {
-        chapterInfo.value = res.data;
-        videoUrl.value = res.data.videoUrl.replace('https://', '');
-        initializePlayer(videoUrl.value);
-    });
-    courseCategory.value = handleIndexType(data.value.courseCategory);
+    // 确保courseId和chapterId有值
+    if (courseId.value && chapterId.value) {
+        await getCourseDetail(courseId.value);
 
+        // 获取章节列表
+        await listChapters(queryParams.value).then(response => {
+            courseData.tableData = response.rows;
+            console.log(courseData.tableData);
+            chaptersList.value = response.rows;
+            total.value = response.total;
+            loading.value = false;
+        });
+
+        // 获取章节视频
+        await getChapters(chapterId.value).then(res => {
+            chapterInfo.value = res.data;
+            videoUrl.value = res.data.videoUrl.replace('https://', '');
+            initializePlayer(videoUrl.value);
+        });
+
+        courseCategory.value = handleIndexType(data.value.courseCategory);
+
+        // 连接WebSocket
+        websocket.value = new WebSocket(`ws://localhost:9800/ws/${courseId.value}+${chapterId.value}+${clientId.value}`);
+
+        // 设置WebSocket回调
+        websocket.value.onerror = onWebSocketError;
+        websocket.value.onopen = onWebSocketOpen;
+        websocket.value.onmessage = onWebSocketMessage;
+        websocket.value.onclose = onWebSocketClose;
+    }
 });
 
 
@@ -109,7 +136,6 @@ const handleIndexType = (data) => {
 const jumpToChapter = (row) => {
     // console.log(row.courseId);
     // console.log(row.chapterId);
-
     router.push(`/study/learn?courseId=${row.courseId}&chapterId=${row.chapterId}`);
 }
 
@@ -149,8 +175,154 @@ const initializePlayer = (url) => {
         rotateFullscreen: true,
     });
 };
+
+/**
+ * 下方是聊天室的完整代码
+ */
+
+interface Message {
+    text: string;
+    isMine: boolean;
+    time: string;
+}
+interface WebSocketData {
+    type: string;
+    message?: string;
+    count?: number;
+}
+
+const websocket = ref<WebSocket | null>(null);
+const clientId = ref<string>(Math.random().toString(36).substr(2)); //随机值
+const message = ref<string>('');
+const messages = ref<Message[]>([]);
+const userId = ref<string>('');
+
+const ChatRoomLoading = ref<boolean>(false);
+const messageContainer = ref<HTMLElement | null>(null); // 引用消息容器
+
+
+// 连接发生错误的回调方法
+const onWebSocketError = () => {
+    messages.value.push({ text: 'error', isMine: false, time: getCurrentTime() });
+};
+
+// 连接成功建立的回调方法
+const onWebSocketOpen = () => {
+    scrollToBottom();
+    messages.value.push({ text: '连接成功', isMine: false, time: getCurrentTime() });
+};
+
+// 接收到消息的回调方法
+const onWebSocketMessage = (event: MessageEvent) => {
+    try {
+        const data: WebSocketData = JSON.parse(event.data);
+        if (data.type === 'serverMessage' && data.message) {
+            messages.value.push({ text: data.message, isMine: false, time: getCurrentTime() });
+        } else if (data.type === 'clientMessage' && data.message) {
+            const isMine = data.userId === userId.value;
+            const userMessage = `${data.message}`;
+            messages.value.push({ text: userMessage, isMine, time: getCurrentTime() });
+        } else {
+            console.error('未知的消息类型:', data);
+        }
+    } catch (error) {
+        console.error('解析消息失败:', event.data, error);
+        messages.value.push({ text: '解析消息失败', isMine: false, time: getCurrentTime() });
+    }
+};
+
+// 连接关闭的回调方法
+const onWebSocketClose = () => {
+    messages.value.push({ text: '连接已关闭', isMine: false, time: getCurrentTime() });
+};
+
+// 发送消息
+const send = async () => {
+    ChatRoomLoading.value = true;
+    if (websocket.value && websocket.value.readyState === WebSocket.OPEN) {
+        if (message.value.trim() !== '') {
+            websocket.value.send(JSON.stringify({
+                type: 'clientMessage',
+                message: message.value,
+                userId: userId.value,
+                time: getCurrentTime()
+            }));
+            message.value = ''; // 清空输入框
+            scrollToBottom(); // 滚动到最底部
+        } else {
+            ElMessageBox.alert('请输入内容', '🫡', {
+                confirmButtonText: 'OK',
+            });
+        }
+        ChatRoomLoading.value = false;
+    } else {
+        ElMessageBox.alert('🫡请点击重新连接', '连接未打开', {
+            confirmButtonText: 'OK',
+        });
+        ChatRoomLoading.value = false;
+    }
+};
+
+// 关闭连接
+const closeWebSocket = () => {
+    if (websocket.value && websocket.value.readyState === WebSocket.OPEN) {
+        websocket.value.close();
+    }
+};
+
+// 重新连接
+const reconnectWebSocket = () => {
+    if (!websocket.value || websocket.value.readyState !== WebSocket.CONNECTING) {
+        websocket.value = new WebSocket(`ws://localhost:9800/ws/${clientId.value}`);
+        websocket.value.onerror = onWebSocketError;
+        websocket.value.onopen = onWebSocketOpen;
+        websocket.value.onmessage = onWebSocketMessage;
+        websocket.value.onclose = onWebSocketClose;
+    }
+};
+
+// 获取当前时间
+const getCurrentTime = (): string => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+};
+
+// 滚动到最底部
+const scrollToBottom = () => {
+    if (messageContainer.value) {
+        setTimeout(() => {
+            messageContainer.value?.scrollTo({
+                top: messageContainer.value.scrollHeight,
+                behavior: 'smooth',
+            });
+        }, 20);
+    }
+};
+
+// 监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接
+onBeforeUnmount(() => {
+    closeWebSocket();
+});
+
+onMounted(() => {
+    if (websocket.value) {
+        websocket.value.onerror = onWebSocketError;
+        websocket.value.onopen = onWebSocketOpen;
+        websocket.value.onmessage = onWebSocketMessage;
+        websocket.value.onclose = onWebSocketClose;
+    }
+});
 </script>
-<style scoped>@media (min-width: 601px) {
+<style scoped>
+@import "@/assets/styles/chatRoomCss.scss";
+@media (min-width: 601px) {
     #player {
         width: 1000px;
         height: 591px;
@@ -176,19 +348,19 @@ const initializePlayer = (url) => {
     .chaptersSelect {
         display: table;
         margin: 20px 50px;
-        width: 1400px
+        width: 1430px
     }
 
     .chapters {
         display: table-cell;
         height: 200px;
-        width: 1110px;
+        width: 1000px;
 
     }
 
     .course-introduction {
         display: table-cell;
-        width: 400px;
+        width: 500px;
     }
 }
 </style>

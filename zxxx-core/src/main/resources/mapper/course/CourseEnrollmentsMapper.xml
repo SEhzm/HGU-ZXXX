@@ -74,6 +74,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where enrollment_id = #{enrollmentId}
     </update>
 
+    <update id="updateLearningProgress">
+        update course_enrollments set chapter_id = #{chapterId} where course_id=#{courseId} and user_id =#{userId}
+    </update>
+
     <delete id="deleteCourseEnrollmentsByEnrollmentId" parameterType="Integer">
         delete from course_enrollments where enrollment_id = #{enrollmentId}
     </delete>

@@ -16,6 +16,14 @@ export function myListEnrollments(query) {
     params: query
   })
 }
+// 更新学习进度
+export function updateLearningProgress(query) {
+  return request({
+    url: '/course/enrollments/updateLearningProgress',
+    method: 'get',
+    params: query
+  })
+}
 //根据课程号，userid，查出章节号
 export function getChaptersIdByCourseId(courseId) {
   return request({

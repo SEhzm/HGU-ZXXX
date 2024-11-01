@@ -44,6 +44,7 @@ import {ref, onMounted, watch, reactive, toRefs, computed,onBeforeUnmount} from 
 import {useRoute, useRouter} from "vue-router";
 import {getCourse} from '@/api/course/course';
 import {listChapters, getChapters} from "@/api/course/chapters";
+import {updateLearningProgress} from "@/api/course/enrollments";
 import { ElMessage, ElMessageBox } from 'element-plus';
 // 引入西瓜播放器
 import "xgplayer/dist/index.min.css";
@@ -143,6 +144,7 @@ const handleIndexType = (data) => {
 const jumpToChapter = (row) => {
     // console.log(row.courseId);
     // console.log(row.chapterId);
+    updateLearningProgress({courseId:row.courseId,chapterId:row.chapterId})
     router.push(`/study/learn?courseId=${row.courseId}&chapterId=${row.chapterId}`);
 }
 
@@ -164,7 +166,7 @@ watch(videoUrl, (newUrl) => {
 const initializePlayer = (url) => {
     const player = new Player({
         id: 'player',
-        url: `http://${url}`,
+        url: `https://${url}`,
         width: 1000,
         height: 525,
         autoplay: false,

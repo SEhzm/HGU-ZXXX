@@ -62,4 +62,6 @@ public interface ICourseEnrollmentsService
     int selectCourse(Integer courseIds);
 
     Integer getCourseStudyTotal(Integer courseId);
+
+    void updateLearningProgress(Integer courseId, Integer chapterId,Long userId);
 }

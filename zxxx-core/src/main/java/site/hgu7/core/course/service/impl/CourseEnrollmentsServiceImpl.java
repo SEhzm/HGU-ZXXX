@@ -114,4 +114,9 @@ public class CourseEnrollmentsServiceImpl implements ICourseEnrollmentsService
     public Integer getCourseStudyTotal(Integer courseId) {
         return courseEnrollmentsMapper.getCourseStudyTotal(courseId);
     }
+
+    @Override
+    public void updateLearningProgress(Integer courseId, Integer chapterId,Long userId) {
+        courseEnrollmentsMapper.updateLearningProgress(courseId,chapterId,userId);
+    }
 }

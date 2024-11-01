@@ -138,4 +138,10 @@ public class CourseEnrollmentsController extends BaseController {
     return R.ok(total);
     }
 
+    @GetMapping("/updateLearningProgress")
+    public void updateLearningProgress(@RequestParam("courseId") Integer courseId ,@RequestParam("chapterId") Integer chapterId){
+        Long userId = SecurityUtils.getUserId();
+        courseEnrollmentsService.updateLearningProgress(courseId,chapterId,userId);
+    }
+
 }

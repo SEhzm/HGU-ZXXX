@@ -13,8 +13,6 @@
             <p style="margin-left: 550px;white-space: nowrap">已有 {{ courseStudyTotal }} 人学习</p>
             <el-button type="success" class="study-btn" @click="navigateToLearn(data.courseId)">立即学习</el-button>
         </div>
-
-
     </div>
 
     <div class="course-jianjie card">
@@ -45,6 +43,7 @@ const chapterInfo = ref([]);
 onMounted(async () => {
     // 获取查询参数中的 courseId
     const id = route.query.courseId;
+    chapterId.value = route.query.chapterId
     if (id) {
         courseId.value = id;
     }
@@ -53,8 +52,6 @@ onMounted(async () => {
         await getCourseDetail(courseId.value);
         await getChaptersIdByCourseId(courseId.value).then(res => {
             enrollmentInfo.value = res.rows;
-            chapterId.value = enrollmentInfo.value[0].chapterId;
-            // console.log(chapterId.value)
         });
         await getChaptersInfo(chapterId.value);
         await getCourseStudyTotal(courseId.value).then(res=>{
@@ -85,7 +82,7 @@ const getChaptersInfo = async (chapterId) => {
     try {
         const res = await getChaptersInfoByChapterId(chapterId);
         chapterInfo.value = res.data;
-        console.log(chapterInfo)
+        // console.log(chapterInfo)
         // 处理响应数据
     } catch (error) {
         // console.log(error)

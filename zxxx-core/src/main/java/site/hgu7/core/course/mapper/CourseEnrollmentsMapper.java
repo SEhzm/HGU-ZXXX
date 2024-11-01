@@ -89,4 +89,6 @@ public interface CourseEnrollmentsMapper
      * @return
      */
     Integer getCourseStudyTotal(Integer courseId);
+
+    void updateLearningProgress(Integer courseId, Integer chapterId,Long userId);
 }

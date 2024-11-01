@@ -1,7 +1,7 @@
 <template>
     <p style="padding: 20px;margin-left: 30px;font-size: 18px">我的选课</p>
     <div class="course-list">
-        <div v-for="(row, index) in enrollmentsList" :key="index" @click="navigateToCourse(row.courseId)"
+        <div v-for="(row, index) in enrollmentsList" :key="index" @click="navigateToCourse(row.courseId,row.chapterId)"
              class="course-box">
             <div>
                 <p style="padding: 10px;margin-left: 20px; font-size: 20px">{{ row.courseName }}</p>
@@ -57,8 +57,8 @@ getList();
  * 跳转页面
  * @param courseId
  */
-const navigateToCourse = (courseId) => {
-    router.push(`/study/show?courseId=${courseId}`)
+const navigateToCourse = (courseId,chapterId) => {
+    router.push(`/study/show?courseId=${courseId}&chapterId=${chapterId}`)
 };
 
 </script>

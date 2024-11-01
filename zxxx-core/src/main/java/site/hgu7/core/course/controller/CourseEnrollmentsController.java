@@ -130,18 +130,19 @@ public class CourseEnrollmentsController extends BaseController {
 
     /**
      * 获取课程总的选课人数
+     *
      * @return
      */
     @GetMapping("/getCourseStudyTotal")
-    public R getCourseStudyTotal(@RequestParam("courseId") Integer courseId){
-    Integer total= courseEnrollmentsService.getCourseStudyTotal(courseId);
-    return R.ok(total);
+    public R getCourseStudyTotal(@RequestParam("courseId") Integer courseId) {
+        Integer total = courseEnrollmentsService.getCourseStudyTotal(courseId);
+        return R.ok(total);
     }
 
     @GetMapping("/updateLearningProgress")
-    public void updateLearningProgress(@RequestParam("courseId") Integer courseId ,@RequestParam("chapterId") Integer chapterId){
+    public void updateLearningProgress(@RequestParam("courseId") Integer courseId, @RequestParam(value = "chapterId", required = false) Integer chapterId) {
         Long userId = SecurityUtils.getUserId();
-        courseEnrollmentsService.updateLearningProgress(courseId,chapterId,userId);
+        courseEnrollmentsService.updateLearningProgress(courseId, chapterId, userId);
     }
 
 }

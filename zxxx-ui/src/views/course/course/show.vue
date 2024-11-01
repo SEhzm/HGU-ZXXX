@@ -25,16 +25,16 @@
 import {ref, onMounted, watch, reactive} from 'vue';
 import {useRoute, useRouter} from "vue-router";
 import {getCourse} from '@/api/course/course';
-import {getChaptersIdByCourseId,getCourseStudyTotal} from '@/api/course/enrollments';
+import {getChaptersIdByCourseId, getCourseStudyTotal} from '@/api/course/enrollments';
 import {getChaptersInfoByChapterId} from "../../../api/course/chapters.js";
-import { ElMessage } from 'element-plus';
+import {ElMessage} from 'element-plus';
 
 
 const route = useRoute();
 const router = useRouter();
 const courseId = ref(null);
 const chapterId = ref(null);
-const courseStudyTotal=ref(null)
+const courseStudyTotal = ref(null)
 const data = ref({});
 const enrollmentInfo = ref([]);
 const chapterInfo = ref([]);
@@ -52,13 +52,16 @@ onMounted(async () => {
         await getCourseDetail(courseId.value);
         await getChaptersIdByCourseId(courseId.value).then(res => {
             enrollmentInfo.value = res.rows;
+            if (chapterId.value == null) {
+                chapterId.value = enrollmentInfo.value[0].chapterId;
+            }
         });
         await getChaptersInfo(chapterId.value);
-        await getCourseStudyTotal(courseId.value).then(res=>{
+        await getCourseStudyTotal(courseId.value).then(res => {
             courseStudyTotal.value = res.data
         })
 
-    }else {
+    } else {
         router.push(`/study/details`)
         ElMessage({
             message: '请从选课记录进入',

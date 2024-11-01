@@ -63,6 +63,7 @@ const loading = ref(true);
 const videoUrl = ref('');
 const chapterInfo = ref({});
 
+
 const courseData = reactive({
     tableData: [],
 })
@@ -111,7 +112,7 @@ onMounted(async () => {
         courseCategory.value = handleIndexType(data.value.courseCategory);
 
         // 连接WebSocket
-        websocket.value = new WebSocket(`ws://localhost:9800/ws/${courseId.value}+${chapterId.value}+${clientId.value}`);
+        websocket.value = new WebSocket(`wss://dgq63136.icu:9800/ws/${courseId.value}+${chapterId.value}+${clientId.value}`);
 
         // 设置WebSocket回调
         websocket.value.onerror = onWebSocketError;
@@ -279,7 +280,7 @@ const closeWebSocket = () => {
 // 重新连接
 const reconnectWebSocket = () => {
     if (!websocket.value || websocket.value.readyState !== WebSocket.CONNECTING) {
-        websocket.value = new WebSocket(`ws://localhost:9800/ws/${clientId.value}`);
+        websocket.value = new WebSocket(`wss://dgq63136.icu:9800/ws/${courseId.value}+${chapterId.value}+${clientId.value}`);
         websocket.value.onerror = onWebSocketError;
         websocket.value.onopen = onWebSocketOpen;
         websocket.value.onmessage = onWebSocketMessage;

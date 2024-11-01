@@ -49,4 +49,9 @@ public class NoticeVo {
      * 发布时间
      */
     private Date create_time;
+
+    /**
+     * 发布者
+     */
+    private String create_by;
 }

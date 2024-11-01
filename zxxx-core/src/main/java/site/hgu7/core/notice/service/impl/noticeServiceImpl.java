@@ -8,6 +8,8 @@ import site.hgu7.core.notice.service.INoticeService;
 
 import java.util.List;
 
+import static site.hgu7.common.utils.PageUtils.startPage;
+
 @Service
 public class noticeServiceImpl implements INoticeService {
 

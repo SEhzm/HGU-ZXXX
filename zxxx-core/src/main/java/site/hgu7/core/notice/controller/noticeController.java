@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import site.hgu7.common.core.controller.BaseController;
 import site.hgu7.common.core.domain.R;
 import site.hgu7.common.core.domain.entity.SysUser;
+import site.hgu7.common.core.page.TableDataInfo;
 import site.hgu7.common.utils.SecurityUtils;
 import site.hgu7.core.course.domain.CourseEnrollments;
 import site.hgu7.core.course.service.ICourseEnrollmentsService;
@@ -20,7 +22,7 @@ import static site.hgu7.common.utils.PageUtils.startPage;
 
 @RestController
 @RequestMapping("/userNotice")
-public class noticeController {
+public class noticeController extends BaseController {
 
     @Autowired
     private ICourseEnrollmentsService courseEnrollmentsService;
@@ -29,7 +31,7 @@ public class noticeController {
     private INoticeService noticeService;
 
     @GetMapping
-    public R getNotice() {
+    public TableDataInfo getNotice() {
         Long userId = SecurityUtils.getUserId();
         //1、拿到用户类型
         Long userRoleId = noticeService.selectUserRoleById(userId);
@@ -37,15 +39,14 @@ public class noticeController {
         //2、拿到用户选的课
         CourseEnrollments courseEnrollments = new CourseEnrollments();
         courseEnrollments.setUserId(SecurityUtils.getUserId());
-        startPage();
         List<CourseEnrollments> list = courseEnrollmentsService.selectCourseEnrollmentsList(courseEnrollments);
         List<Integer> courseIdList = new ArrayList<>();
         for (CourseEnrollments enrollments : list) {
             courseIdList.add(enrollments.getCourseId());
         }
-
-        List<NoticeVo> noticeVo = noticeService.getNoticeList(userRoleId,courseIdList);
-        return R.ok(noticeVo);
+        startPage();
+        List<NoticeVo> noticeVo = noticeService.getNoticeList(userRoleId, courseIdList);
+        return getDataTable(noticeVo);
     }
 
 }

@@ -18,10 +18,12 @@
         <result property="notice_user_type" column="notice_user_type"/>
         <result property="notice_courseId" column="notice_courseId"/>
         <result property="create_time" column="create_time"/>
+        <result property="create_by" column="create_by"/>
     </resultMap>
 
     <select id="getNoticeList" resultMap="NoticeVoResultMap">
         SELECT
+        create_by,
         notice_id,
         notice_title,
         notice_type,

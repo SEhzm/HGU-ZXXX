@@ -29,7 +29,7 @@ import {useRoute, useRouter} from "vue-router";
 import {getCourse} from '@/api/course/course';
 import {getChaptersIdByCourseId,getCourseStudyTotal} from '@/api/course/enrollments';
 import {getChaptersInfoByChapterId} from "../../../api/course/chapters.js";
-
+import { ElMessage } from 'element-plus';
 
 
 const route = useRoute();
@@ -61,6 +61,12 @@ onMounted(async () => {
             courseStudyTotal.value = res.data
         })
 
+    }else {
+        router.push(`/study/details`)
+        ElMessage({
+            message: '请从选课记录进入',
+            type: 'warning',
+        })
     }
 })
 

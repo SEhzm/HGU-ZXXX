@@ -130,6 +130,24 @@
                      </el-select>
                   </el-form-item>
                </el-col>
+
+                <el-col :span="12">
+                  <el-form-item label="通知人-用户类型" prop="notice_user_type" label-width="120">
+                     <el-select v-model="form.notice_user_type" placeholder="不填为全体可见" clearable >
+                        <el-option
+                           v-for="dict in sys_user_role"
+                           :key="dict.value"
+                           :label="dict.label"
+                           :value="dict.value"
+                        ></el-option>
+                     </el-select>
+                  </el-form-item>
+               </el-col>
+                <el-col :span="12">
+                  <el-form-item label="通知人-课程id" prop="notice_courseId" label-width="100">
+                      <el-input v-model="form.notice_courseId" placeholder="不填为全体可见" clearable />
+                  </el-form-item>
+               </el-col>
                <el-col :span="24">
                   <el-form-item label="状态">
                      <el-radio-group v-model="form.status">
@@ -162,7 +180,7 @@
 import { listNotice, getNotice, delNotice, addNotice, updateNotice } from "@/api/system/notice";
 
 const { proxy } = getCurrentInstance();
-const { sys_notice_status, sys_notice_type } = proxy.useDict("sys_notice_status", "sys_notice_type");
+const { sys_notice_status, sys_notice_type,sys_user_role } = proxy.useDict("sys_notice_status", "sys_notice_type","sys_user_role");
 
 const noticeList = ref([]);
 const open = ref(false);

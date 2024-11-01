@@ -35,7 +35,7 @@
         FROM
         sys_notice
         WHERE
-        1 = 1
+        status=0
         <if test="userRoleId != null">
             AND (notice_user_type = #{userRoleId} OR notice_user_type IS NULL)
         </if>

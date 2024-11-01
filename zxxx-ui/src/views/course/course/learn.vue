@@ -118,6 +118,12 @@ onMounted(async () => {
         websocket.value.onopen = onWebSocketOpen;
         websocket.value.onmessage = onWebSocketMessage;
         websocket.value.onclose = onWebSocketClose;
+    }else{
+        router.push(`/study/details`)
+        ElMessage({
+            message: '请从选课记录进入',
+            type: 'warning',
+        })
     }
 });
 

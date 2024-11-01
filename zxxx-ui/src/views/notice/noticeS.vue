@@ -3,8 +3,8 @@
         <el-table :data="noticeList" style="width: 100%; cursor: pointer;font-size: 17px"
                   :row-style="{ height: '80px' }" @row-click="openDig">
             <el-table-column prop="" label="" min-width="100"></el-table-column>
-            <el-table-column prop="" label="" min-width="5">◉</el-table-column>
-            <el-table-column prop="noticeTitle" label="公告/通知标题" min-width="300"/>
+            <el-table-column prop="" label="" min-width="15">◉</el-table-column>
+            <el-table-column prop="noticeTitle" label="公告/通知标题" min-width="200"/>
             <el-table-column show-overflow-tooltip prop="create_time" label="时间" min-width="200">
                 <template #default="scope">
                     <span>{{ parseTime(scope.row.create_time, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>

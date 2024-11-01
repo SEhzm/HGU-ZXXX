@@ -142,7 +142,7 @@
                     <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)"
                                v-hasPermi="['course:course:remove']">删除
                     </el-button>
-                    <el-button link type="primary" @click="Upload(scope.row)">
+                    <el-button link type="primary" @click="Upload(scope.row)" v-hasPermi="['course:course:add']">
                         上传章节
                     </el-button>
                 </template>

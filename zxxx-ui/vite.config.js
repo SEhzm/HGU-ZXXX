@@ -30,11 +30,11 @@ export default defineConfig(({ mode, command }) => {
       open: true,
       proxy: {
         // https://cn.vitejs.dev/config/#server-proxy
-        '/dev-api': {
+        '/prod-api': {
           target: 'https://82.157.198.237:9800',
           //// target: 'http://localhsot:9800',
           changeOrigin: true,
-          rewrite: (p) => p.replace(/^\/dev-api/, '')
+          rewrite: (p) => p.replace(/^\/prod-api/, '')
         }
       }
     },

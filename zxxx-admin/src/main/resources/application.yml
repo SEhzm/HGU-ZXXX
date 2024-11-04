@@ -15,10 +15,10 @@ ruoyi:
 
 # 开发环境配置
 server:
-  ssl:
-    key-store: classpath:ssl.jks
-    key-store-password: 123456
-    key-password: 123456
+#  ssl:
+#    key-store: classpath:ssl.jks
+#    key-store-password: 123456
+#    key-password: 123456
   # 服务器的HTTP端口，默认为9800
   port: 9800
   servlet:

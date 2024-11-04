@@ -106,7 +106,7 @@ onMounted(async () => {
         // 获取章节视频
         await getChapters(chapterId.value).then(res => {
             chapterInfo.value = res.data;
-            videoUrl.value = res.data.videoUrl.replace('https://', '');
+            videoUrl.value = res.data.videoUrl.replace('http://', '');
             initializePlayer(videoUrl.value);
         });
 

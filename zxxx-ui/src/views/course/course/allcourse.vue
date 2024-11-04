@@ -226,6 +226,25 @@
                 <el-form-item label="视频链接" prop="videoUrl">
                     <el-input v-model="form.videoUrl" placeholder="请输入视频链接"/>
                 </el-form-item>
+                <el-form-item label="视频文件" prop="videoUrl">
+                    <el-upload
+                        class="upload-demo"
+                        drag
+                        action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+                        multiple
+                    >
+                        <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+                        <div class="el-upload__text">
+                            Drop file here or <em>click to upload</em>
+                        </div>
+                        <template #tip>
+                            <div class="el-upload__tip">
+                                jpg/png files with a size less than 500kb
+                            </div>
+                        </template>
+                    </el-upload>
+                    <el-input v-model="form.videoUrl" placeholder="请输入视频链接"/>
+                </el-form-item>
                 <el-form-item label="章节顺序" prop="position">
                     <el-input v-model="form.position" placeholder="请输入章节顺序"/>
                 </el-form-item>

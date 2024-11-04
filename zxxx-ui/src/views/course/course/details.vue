@@ -4,8 +4,11 @@
         <div v-for="(row, index) in enrollmentsList" :key="index" @click="navigateToCourse(row.courseId,row.chapterId)"
              class="course-box">
             <div>
-                <p style="padding: 10px;margin-left: 20px; font-size: 20px">{{ row.courseName }}</p>
+                <p style="padding: 10px;margin-left: 5px; font-size: 20px">{{ row.courseName }}</p>
+                <el-tag effect="dark" round type="success" class="tag" style="color: black;margin-left: 160px;margin-top: -60px">{{ row.courseName }}</el-tag>
+                <el-tag round class="tag" style="margin-left: 10px;margin-top: -60px">{{ row.teacher }}</el-tag>
                 <br><br><br><br>
+
                 <span class="course-content">
                     <img src="@/assets/svg/teacher.svg" style="">：{{ row.teacher }}
                 </span>
@@ -88,7 +91,7 @@ const navigateToCourse = (courseId,chapterId) => {
 }
 
 .enrollment-date {
-    margin-left: 150px;
+    margin-left: 80px;
 }
 
 </style>

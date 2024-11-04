@@ -204,7 +204,7 @@ const websocket = ref<WebSocket | null>(null);
 const clientId = ref<string>(Math.random().toString(36).substr(2)); //随机值
 const message = ref<string>('');
 const messages = ref<Message[]>([]);
-const userId = ref<string>('');
+const userId = clientId;
 
 const ChatRoomLoading = ref<boolean>(false);
 const messageContainer = ref<HTMLElement | null>(null); // 引用消息容器

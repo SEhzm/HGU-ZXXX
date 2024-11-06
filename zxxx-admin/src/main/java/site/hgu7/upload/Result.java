@@ -1,4 +1,4 @@
-package site.hgu7.core.upload;
+package site.hgu7.upload;
 
 public class Result {
     private String code;

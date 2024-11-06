@@ -1,20 +1,20 @@
-package site.hgu7.core.upload.impl;
-
+package site.hgu7.upload.impl;
 
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
 import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
-import org.apache.logging.log4j.util.StringMap;
+import com.qiniu.util.StringMap;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import site.hgu7.core.upload.IQiniuService;
+import site.hgu7.upload.IQiniuService;
 
 import java.io.File;
 import java.io.InputStream;
+
 
 @Service
 public class QiniuServiceImpl implements IQiniuService, InitializingBean {

@@ -161,26 +161,31 @@
                     <el-input v-model="form.chapterDescription" placeholder="请输入章节描述"/>
                 </el-form-item>
 
-                <el-form-item label="视频链接" prop="videoUrl">
+                <el-form-item label="视频文件" prop="videoUrl">
+                    <el-tag v-if="data.form.videoUrl">已上传</el-tag>
                     <el-upload
-                        action="/upload"
-                        :on-success="handleSuccess"
-                        :on-error="handleError"
-                        :before-upload="beforeUpload"
-                        multiple
+                        v-else
+                        class="upload-demo"
                         drag
-                        :limit="3"
-                        :on-exceed="handleExceed"
-                        :file-list="fileList">
+                        action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+                        multiple
+                        :http-request="handleUpload"
+                        :on-success="handleSuccess"
+                    >
                         <el-icon class="el-icon--upload"><upload-filled /></el-icon>
                         <div class="el-upload__text">
                             Drop file here or <em>click to upload</em>
                         </div>
+                        <template #tip>
+                            <div class="el-upload__tip">
+                                上传mp4文件，最大200MB
+                            </div>
+                        </template>
                     </el-upload>
                 </el-form-item>
-                <el-form-item label="视频链接" prop="videoUrl">
-                    <el-input v-model="form.videoUrl" placeholder="请输入视频链接"/>
-                </el-form-item>
+                <!--                <el-form-item label="视频链接" prop="videoUrl">-->
+                <!--                    <el-input v-model="form.videoUrl" placeholder="请输入视频链接"/>-->
+                <!--                </el-form-item>-->
                 <el-form-item label="章节顺序" prop="position">
                     <el-input v-model="form.position" placeholder="请输入章节顺序"/>
                 </el-form-item>
@@ -199,6 +204,7 @@
 
 <script setup name="Chapters">
 import {listChapters, getChapters, delChapters, addChapters, updateChapters} from "@/api/course/chapters";
+import {ElMessage} from 'element-plus'
 
 const {proxy} = getCurrentInstance();
 
@@ -230,30 +236,35 @@ const data = reactive({
 
 const {queryParams, form, rules} = toRefs(data);
 //上传
-const fileList = ref([]);
+import axios from 'axios'
 
-const handleSuccess = (response, file, fileList) => {
-    console.log('上传成功', response);
-};
+const baseUrl = 'http://localhost:9800'  // 动态读取环境变量
 
-const handleError = (err, file, fileList) => {
-    console.error('上传失败', err);
-};
+const fileList = ref([])
+// 自定义上传函数
+const handleUpload = async (options) => {
+    const formData = new FormData()
+    formData.append('file', options.file)
 
-const beforeUpload = (file) => {
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-        ElMessage.error('上传文件大小不能超过 2MB!');
+    try {
+        const response = await axios.post(`${baseUrl}/file/upload`, formData, {
+            headers: {'Content-Type': 'multipart/form-data'}
+        }).then(res => {
+            data.form.videoUrl = res.data
+            console.log(data.form.videoUrl)
+        })
+        options.onSuccess && options.onSuccess(response.data)
+    } catch (error) {
+        options.onError && options.onError(error)
     }
-    return isLt2M;
-};
-
-const handleExceed = (files, fileList) => {
-    ElMessage.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
-};
-
-
-
+}
+const handleSuccess = (response) => {
+    console.log("上传成功"+response)
+    ElMessage({
+        message: '上传成功',
+        type: 'success',
+    })
+}
 
 
 /** 查询course_chapters列表 */
@@ -268,7 +279,6 @@ function getList() {
 
 // 取消按钮
 function cancel() {
-
     open.value = false;
     reset();
 }

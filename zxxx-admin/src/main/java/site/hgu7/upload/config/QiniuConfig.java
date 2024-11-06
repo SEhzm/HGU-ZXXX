@@ -1,4 +1,4 @@
-package site.hgu7.core.upload.config;
+package site.hgu7.upload.config;
 
 
 import com.google.gson.Gson;

@@ -199,7 +199,25 @@
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="课程封面" prop="courseImg">
-                    <el-input v-model="form.courseImg" placeholder="请输入课程封面"/>
+                    <el-tag v-if="data.form.courseImg">已上传</el-tag>
+                    <el-upload
+                        v-else
+                        class="upload-demo"
+                        drag
+                        multiple
+                        :http-request="handleUploadImg"
+                        :on-success="handleSuccess"
+                    >
+                        <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+                        <div class="el-upload__text">
+                            Drop file here or <em>click to upload</em>
+                        </div>
+                        <template #tip>
+                            <div class="el-upload__tip">
+                                上传图片，最大500kb
+                            </div>
+                        </template>
+                    </el-upload>
                 </el-form-item>
             </el-form>
             <template #footer>
@@ -224,27 +242,27 @@
                     <el-input v-model="form.chapterDescription" placeholder="请输入章节描述"/>
                 </el-form-item>
                 <el-form-item label="视频链接" prop="videoUrl">
-                    <el-input v-model="form.videoUrl" placeholder="请输入视频链接"/>
+                    <el-tag v-if="data.form.videoUrl">已上传</el-tag>
+                    <el-upload
+                        v-else
+                        class="upload-demo"
+                        drag
+                        multiple
+                        :http-request="handleUpload"
+                        :on-success="handleSuccess"
+                    >
+                        <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+                        <div class="el-upload__text">
+                            Drop file here or <em>click to upload</em>
+                        </div>
+                        <template #tip>
+                            <div class="el-upload__tip">
+                                上传mp4文件，最大200MB
+                            </div>
+                        </template>
+                    </el-upload>
                 </el-form-item>
-<!--                <el-form-item label="视频文件" prop="videoUrl">-->
-<!--                    <el-upload-->
-<!--                        class="upload-demo"-->
-<!--                        drag-->
-<!--                        action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"-->
-<!--                        multiple-->
-<!--                    >-->
-<!--                        <el-icon class="el-icon&#45;&#45;upload"><upload-filled /></el-icon>-->
-<!--                        <div class="el-upload__text">-->
-<!--                            Drop file here or <em>click to upload</em>-->
-<!--                        </div>-->
-<!--                        <template #tip>-->
-<!--                            <div class="el-upload__tip">-->
-<!--                                jpg/png files with a size less than 500kb-->
-<!--                            </div>-->
-<!--                        </template>-->
-<!--                    </el-upload>-->
-<!--                    <el-input v-model="form.videoUrl" placeholder="请输入视频链接"/>-->
-<!--                </el-form-item>-->
+
                 <el-form-item label="章节顺序" prop="position">
                     <el-input v-model="form.position" placeholder="请输入章节顺序"/>
                 </el-form-item>
@@ -299,6 +317,56 @@ const data = reactive({
 });
 
 const {queryParams, form, rules} = toRefs(data);
+
+//上传
+import axios from 'axios'
+
+const baseUrl = 'http://localhost:9800'  // 动态读取环境变量
+
+const fileList = ref([])
+// 自定义上传函数
+const handleUpload = async (options) => {
+    const formData = new FormData()
+    formData.append('file', options.file)
+
+    try {
+        const response = await axios.post(`${baseUrl}/file/upload`, formData, {
+            headers: {'Content-Type': 'multipart/form-data'}
+        }).then(res => {
+            data.form.videoUrl = res.data
+            console.log(data.form.videoUrl)
+        })
+        options.onSuccess && options.onSuccess(response.data)
+    } catch (error) {
+        options.onError && options.onError(error)
+    }
+}
+const handleUploadImg = async (options) => {
+    const formData = new FormData()
+    formData.append('file', options.file)
+
+    try {
+        const response = await axios.post(`${baseUrl}/file/upload`, formData, {
+            headers: {'Content-Type': 'multipart/form-data'}
+        }).then(res => {
+            data.form.courseImg = res.data
+            console.log(data.form.courseImg)
+        })
+        options.onSuccess && options.onSuccess(response.data)
+    } catch (error) {
+        options.onError && options.onError(error)
+    }
+}
+const handleSuccess = (response) => {
+    console.log("上传成功"+response)
+    ElMessage({
+        message: '上传成功',
+        type: 'success',
+    })
+}
+
+
+
 
 /** 查询course列表 */
 function getList() {

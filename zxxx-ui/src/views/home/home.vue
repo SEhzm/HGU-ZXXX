@@ -55,6 +55,19 @@
 
     </div>
     <div class="app-container home">
+        <div class="searchInput">
+            <el-input
+                clearable
+                size="large"
+                v-model="queryParams.courseName"
+                placeholder="请输入课程.."
+                class="input-with-select"
+            >
+                <template #append>
+                    <el-button icon="Search" @click="goToCourse"/>
+                </template>
+            </el-input>
+        </div>
         <div class="carou">
             <el-carousel arrow="always" :interval="2000" autoplay>
                 <el-carousel-item v-for="(item, index) in carouselData.caruCourseId" :key="index"
@@ -115,7 +128,7 @@ const carouselData = reactive({
     caruCourseId: []
 })
 //跳转课程页面
-const goToCourse = (courseId) => {
+const goToCourse = () => {
     // console.log(item)
     ElMessageBox.confirm('请先登录在学习喔🫡', '您未登录😯', {
         confirmButtonText: '去登录',
@@ -134,7 +147,12 @@ const goToCourse = (courseId) => {
         })
 
 }
-
+const data = reactive({
+    queryParams: {
+        courseName: null,
+    },
+});
+const {queryParams} = toRefs(data);
 onMounted(async () => {
     await getHomeCourse().then(res => {
         homeCourseInfo.value = res.data;
@@ -159,6 +177,14 @@ onMounted(async () => {
 }
 
 @media (min-width: 601px) {
+    .searchInput {
+        border-radius: 10px;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+        position: relative;
+        width: 700px;
+        margin-left: 380px;
+        margin-top: 3em;
+    }
     .home{
         margin-left: 200px;
     }
@@ -317,7 +343,7 @@ onMounted(async () => {
         position: relative;
         width: 900px;
         margin-left: 280px;
-        margin-top: 120px;
+        margin-top: 60px;
     }
 
     .el-menu .el-menu-item:hover {

@@ -2,7 +2,7 @@ package site.hgu7.core.course.service;
 
 import java.util.List;
 import site.hgu7.core.course.domain.Course;
-import site.hgu7.core.course.domain.HomeCourse;
+import site.hgu7.core.course.domain.HomeCourseVo;
 
 /**
  * courseService接口
@@ -64,5 +64,5 @@ public interface ICourseService
      * 获取首页轮播图,推荐,精品课的课程id
      * @return
      */
-    HomeCourse getHomeCourse();
+    HomeCourseVo getHomeCourse();
 }

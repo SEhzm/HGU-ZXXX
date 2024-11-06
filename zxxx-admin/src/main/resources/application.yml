@@ -1,13 +1,13 @@
 # 项目相关配置
 ruoyi:
   # 名称
-  name: RuoYi
+  name: HGU7.site
   # 版本
   version: 3.8.8
   # 版权年份
   copyrightYear: 2024
   # 文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
-  profile: E:/ruoyi/uploadPath
+  profile: D:/RuoYi/uploadPath
   # 获取ip地址开关
   addressEnabled: false
   # 验证码类型 math 数字计算 char 字符验证
@@ -15,10 +15,10 @@ ruoyi:
 
 # 开发环境配置
 server:
-  ssl:
-    key-store: classpath:ssl.jks
-    key-store-password: 123456
-    key-password: 123456
+#  ssl:
+#    key-store: classpath:ssl.jks
+#    key-store-password: 123456
+#    key-password: 123456
   # 服务器的HTTP端口，默认为9800
   port: 9800
   servlet:

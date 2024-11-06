@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class HomeCourse {
+public class HomeCourseVo {
     private List<Course> CaruCourseId;
     private List<Course> findCourseId;
     private List<Course> recommendCourseId;

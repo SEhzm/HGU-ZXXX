@@ -19,7 +19,7 @@ import site.hgu7.common.core.domain.AjaxResult;
 import site.hgu7.common.core.domain.R;
 import site.hgu7.common.enums.BusinessType;
 import site.hgu7.core.course.domain.Course;
-import site.hgu7.core.course.domain.HomeCourse;
+import site.hgu7.core.course.domain.HomeCourseVo;
 import site.hgu7.core.course.service.ICourseService;
 import site.hgu7.common.utils.poi.ExcelUtil;
 import site.hgu7.common.core.page.TableDataInfo;
@@ -104,8 +104,8 @@ public class CourseController extends BaseController {
      */
     @GetMapping("/getHomeCourse")
     public R getHomeCourse(){
-         HomeCourse homeCourse = courseService.getHomeCourse();
-         return R.ok(homeCourse);
+         HomeCourseVo homeCourseVo = courseService.getHomeCourse();
+         return R.ok(homeCourseVo);
     }
 
 

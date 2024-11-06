@@ -1,5 +1,18 @@
 <template>
     <div class="app-container home">
+        <div class="searchInput">
+            <el-input
+                clearable
+                size="large"
+                v-model="queryParams.courseName"
+                placeholder="请输入课程.."
+                class="input-with-select"
+            >
+                <template #append>
+                    <el-button icon="Search" @click="searchCourse"/>
+                </template>
+            </el-input>
+        </div>
         <div class="carou">
             <el-carousel arrow="always" :interval="2000" autoplay>
                 <el-carousel-item v-for="(item, index) in carouselData.caruCourseId" :key="index"
@@ -16,7 +29,10 @@
                  @click="goToCourse(row.courseId)"
                  class="course-box" :style="{ backgroundImage: `url(${row.courseImg})` ,opacity:0.9}">
                 <div style="display: flex">
-                    <el-tag effect="dark" round type="success" class="tag" style="color: black">{{ row.courseName }}</el-tag>
+                    <el-tag effect="dark" round type="success" class="tag" style="color: black">{{
+                            row.courseName
+                        }}
+                    </el-tag>
                     <el-tag round class="tag">{{ row.teacher }}</el-tag>
                     <span class="enrollment-date">{{ row.enrollmentDate }}</span>
                 </div>
@@ -30,7 +46,10 @@
                  @click="goToCourse(row.courseId)"
                  class="course-box" :style="{ backgroundImage: `url(${row.courseImg})` ,opacity:0.9}">
                 <div style="display: flex">
-                    <el-tag effect="dark" round type="success" class="tag" style="color: black">{{ row.courseName }}</el-tag>
+                    <el-tag effect="dark" round type="success" class="tag" style="color: black">{{
+                            row.courseName
+                        }}
+                    </el-tag>
                     <el-tag effect="dark" round class="tag">{{ row.teacher }}
                     </el-tag>
                     <el-tag effect="dark" round class="shiny-gold-tag">精品课程</el-tag>
@@ -39,6 +58,24 @@
             </div>
         </div>
     </div>
+
+    <el-dialog v-model="dialogTableVisible" title="搜索到的课程" width="1600">
+        <div class="course-list">
+            <div v-if="searchCourseData.Course.rows"
+                 v-for="(row, index) in searchCourseData.Course.rows" :key="index"
+                 @click="goToCourse(row.courseId)"
+                 class="course-box" :style="{ backgroundImage: `url(${row.courseImg})` ,opacity:0.9}">
+                <div style="display: flex">
+                    <el-tag effect="dark" round type="success" class="tag" style="color: black">{{
+                            row.courseName
+                        }}
+                    </el-tag>
+                    <el-tag round class="tag">{{ row.teacher }}</el-tag>
+                    <span class="enrollment-date">{{ row.enrollmentDate }}</span>
+                </div>
+            </div>
+        </div>
+    </el-dialog>
 </template>
 
 <script setup>
@@ -47,27 +84,44 @@ import {ref, reactive, onMounted} from 'vue';
 import {getCourse} from '@/api/course/course';
 import {getHomeCourse} from "../api/course/course.js";
 import {useRouter} from "vue-router";
+import {listCourse} from "@/api/course/course";
 
+const dialogTableVisible = ref(false)
 const router = useRouter();
 const homeCourseInfo = reactive({
     caruCourseId: [],
     findCourseId: [],
     recommendCourseId: []
 })
-
+const searchCourseData = reactive({
+    Course: []
+})
 const carouselData = reactive({
     caruCourseId: []
 })
+const data = reactive({
+    queryParams: {
+        courseName: null,
+    },
+});
+
+const {queryParams} = toRefs(data);
 //跳转课程页面
 const goToCourse = (courseId) => {
     // console.log(item)
     router.push(`/study/show?courseId=${courseId}`)
 }
-
+const searchCourse = () => {
+    listCourse(queryParams.value).then(res => {
+        searchCourseData.Course = res
+        dialogTableVisible.value = true
+        console.log(searchCourseData.Course)
+    })
+}
 onMounted(async () => {
     await getHomeCourse().then(res => {
         homeCourseInfo.value = res.data;
-        console.log(homeCourseInfo.value.recommendCourseId);
+        // console.log(homeCourseInfo.value.recommendCourseId);
         carouselData.caruCourseId = homeCourseInfo.value.caruCourseId;
     });
 })
@@ -86,6 +140,14 @@ onMounted(async () => {
 }
 
 @media (min-width: 601px) {
+    .searchInput {
+        border-radius: 10px;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+        position: relative;
+        width: 700px;
+        margin-left: 380px;
+        margin-top: 10px;
+    }
     .tag {
         margin-left: 30px;
         margin-top: 10px;
@@ -146,7 +208,7 @@ onMounted(async () => {
         position: relative;
         width: 900px;
         margin-left: 280px;
-        margin-top: 120px;
+        margin-top: 30px;
     }
 
     .el-menu .el-menu-item:hover {

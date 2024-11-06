@@ -30,7 +30,7 @@
         <p style="text-align: center"><span>发布时间：{{ parseTime(form.create_time, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
             <span style="margin-left: 25px">作者：{{ form.create_by }}</span></p>
         <br><br>
-        <duv v-html="form.noticeContent" style="text-indent: 2em"></duv>
+        <p v-html="form.noticeContent" style="text-indent: 2em"></p>
         <el-button @click="open= false" class="dialog-footer">关 闭</el-button>
     </el-dialog>
 </template>

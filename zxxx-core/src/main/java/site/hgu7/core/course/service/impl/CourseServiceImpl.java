@@ -3,11 +3,10 @@ package site.hgu7.core.course.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.catalina.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import site.hgu7.common.utils.SecurityUtils;
-import site.hgu7.core.course.domain.HomeCourse;
+import site.hgu7.core.course.domain.HomeCourseVo;
 import site.hgu7.core.course.mapper.CourseMapper;
 import site.hgu7.core.course.domain.Course;
 import site.hgu7.core.course.service.ICourseService;
@@ -100,7 +99,7 @@ public class CourseServiceImpl implements ICourseService {
      * @return
      */
     @Override
-    public HomeCourse getHomeCourse() {
+    public HomeCourseVo getHomeCourse() {
         List<Integer> caruCourseIds = courseMapper.getCaruCourseId();
         List<Integer> findCourseIds = courseMapper.getFindCourseId();
         List<Integer> recommendCourseId = courseMapper.getRecommendCourseId();
@@ -119,8 +118,8 @@ public class CourseServiceImpl implements ICourseService {
             Course course = courseMapper.selectCourseByCourseId(courseId);
             recommendCourse.add(course);
         }
-        HomeCourse homeCourse = HomeCourse.builder().CaruCourseId(caruCourse).findCourseId(findCourse).recommendCourseId(recommendCourse).build();
-        return homeCourse;
+        HomeCourseVo homeCourseVo = HomeCourseVo.builder().CaruCourseId(caruCourse).findCourseId(findCourse).recommendCourseId(recommendCourse).build();
+        return homeCourseVo;
     }
 
 

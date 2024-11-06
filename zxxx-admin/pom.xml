@@ -37,7 +37,7 @@
             <version>1.6.2</version>
         </dependency>
 
-         <!-- Mysql驱动包 -->
+        <!-- Mysql驱动包 -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -54,7 +54,11 @@
             <groupId>site.hgu7</groupId>
             <artifactId>zxxx-quartz</artifactId>
         </dependency>
-
+        <!--common-->
+        <dependency>
+            <groupId>site.hgu7</groupId>
+            <artifactId>zxxx-common</artifactId>
+        </dependency>
         <!-- 代码生成-->
         <dependency>
             <groupId>site.hgu7</groupId>
@@ -84,15 +88,15 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>   
-                <groupId>org.apache.maven.plugins</groupId>   
-                <artifactId>maven-war-plugin</artifactId>   
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                     <warName>${project.artifactId}</warName>
-                </configuration>   
-           </plugin>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

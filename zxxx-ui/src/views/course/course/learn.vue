@@ -9,8 +9,8 @@
         <div id="player"></div>
         <div class="card chat">
             <div style="height: 500px;" v-if="courseId&&chapterId">
-                <el-button @click="closeWebSocket">关闭连接</el-button>
-                <el-button @click="reconnectWebSocket">重新连接</el-button>
+<!--                <el-button @click="closeWebSocket">关闭连接</el-button>-->
+<!--                <el-button @click="reconnectWebSocket">重新连接</el-button>-->
                 <div id="message-container" ref="messageContainer">
                     <div v-for="(msg, index) in messages" :key="index"
                          :class="{ 'message-bubble': true, 'mine': msg.isMine, 'others': !msg.isMine }">
@@ -218,7 +218,7 @@ const onWebSocketError = () => {
 // 连接成功建立的回调方法
 const onWebSocketOpen = () => {
     scrollToBottom();
-    messages.value.push({ text: '连接成功', isMine: false, time: getCurrentTime() });
+    messages.value.push({ text: `${data.value.courseName}${chapterInfo.value.chapterTitle} 章节在线聊天连接成功`, isMine: false, time: getCurrentTime() });
 };
 
 // 接收到消息的回调方法

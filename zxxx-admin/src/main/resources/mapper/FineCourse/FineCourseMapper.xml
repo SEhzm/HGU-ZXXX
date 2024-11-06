@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.hgu7.FineCourse.mapper.FineCourseMapper">
+    
+    <resultMap type="FineCourse" id="FineCourseResult">
+        <result property="fineId"    column="Fine_id"    />
+        <result property="findCourseId"    column="findCourseId"    />
+    </resultMap>
+
+    <sql id="selectFineCourseVo">
+        select Fine_id, findCourseId from fine_course
+    </sql>
+
+    <select id="selectFineCourseList" parameterType="FineCourse" resultMap="FineCourseResult">
+        <include refid="selectFineCourseVo"/>
+        <where>  
+            <if test="findCourseId != null "> and findCourseId = #{findCourseId}</if>
+        </where>
+    </select>
+    
+    <select id="selectFineCourseByFineId" parameterType="Long" resultMap="FineCourseResult">
+        <include refid="selectFineCourseVo"/>
+        where Fine_id = #{fineId}
+    </select>
+
+    <insert id="insertFineCourse" parameterType="FineCourse" useGeneratedKeys="true" keyProperty="fineId">
+        insert into fine_course
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="findCourseId != null">findCourseId,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="findCourseId != null">#{findCourseId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFineCourse" parameterType="FineCourse">
+        update fine_course
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="findCourseId != null">findCourseId = #{findCourseId},</if>
+        </trim>
+        where Fine_id = #{fineId}
+    </update>
+
+    <delete id="deleteFineCourseByFineId" parameterType="Long">
+        delete from fine_course where Fine_id = #{fineId}
+    </delete>
+
+    <delete id="deleteFineCourseByFineIds" parameterType="String">
+        delete from fine_course where Fine_id in 
+        <foreach item="fineId" collection="array" open="(" separator="," close=")">
+            #{fineId}
+        </foreach>
+    </delete>
+</mapper>

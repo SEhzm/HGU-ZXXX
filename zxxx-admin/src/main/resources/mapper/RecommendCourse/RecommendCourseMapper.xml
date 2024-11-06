@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.hgu7.RecommendCourse.mapper.RecommendCourseMapper">
+    
+    <resultMap type="RecommendCourse" id="RecommendCourseResult">
+        <result property="recommendId"    column="recommend_id"    />
+        <result property="recommendCourseId"    column="recommendCourseId"    />
+    </resultMap>
+
+    <sql id="selectRecommendCourseVo">
+        select recommend_id, recommendCourseId from recommend_course
+    </sql>
+
+    <select id="selectRecommendCourseList" parameterType="RecommendCourse" resultMap="RecommendCourseResult">
+        <include refid="selectRecommendCourseVo"/>
+        <where>  
+            <if test="recommendCourseId != null "> and recommendCourseId = #{recommendCourseId}</if>
+        </where>
+    </select>
+    
+    <select id="selectRecommendCourseByRecommendId" parameterType="Long" resultMap="RecommendCourseResult">
+        <include refid="selectRecommendCourseVo"/>
+        where recommend_id = #{recommendId}
+    </select>
+
+    <insert id="insertRecommendCourse" parameterType="RecommendCourse" useGeneratedKeys="true" keyProperty="recommendId">
+        insert into recommend_course
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="recommendCourseId != null">recommendCourseId,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="recommendCourseId != null">#{recommendCourseId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRecommendCourse" parameterType="RecommendCourse">
+        update recommend_course
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="recommendCourseId != null">recommendCourseId = #{recommendCourseId},</if>
+        </trim>
+        where recommend_id = #{recommendId}
+    </update>
+
+    <delete id="deleteRecommendCourseByRecommendId" parameterType="Long">
+        delete from recommend_course where recommend_id = #{recommendId}
+    </delete>
+
+    <delete id="deleteRecommendCourseByRecommendIds" parameterType="String">
+        delete from recommend_course where recommend_id in 
+        <foreach item="recommendId" collection="array" open="(" separator="," close=")">
+            #{recommendId}
+        </foreach>
+    </delete>
+</mapper>

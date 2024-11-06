@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.hgu7.CaruCourse.mapper.CaruCourseMapper">
+
+    <resultMap type="CaruCourse" id="CaruCourseResult">
+        <result property="caruId"    column="caru_id"    />
+        <result property="CaruCourseId"    column="CaruCourseId"    />
+    </resultMap>
+
+    <sql id="selectCaruCourseVo">
+        select caru_id, CaruCourseId from caru_course
+    </sql>
+
+    <select id="selectCaruCourseList" parameterType="CaruCourse" resultMap="CaruCourseResult">
+        <include refid="selectCaruCourseVo"/>
+        <where>
+            <if test="CaruCourseId != null "> and CaruCourseId = #{CaruCourseId}</if>
+        </where>
+    </select>
+
+    <select id="selectCaruCourseByCaruId" parameterType="Long" resultMap="CaruCourseResult">
+        <include refid="selectCaruCourseVo"/>
+        where caru_id = #{caruId}
+    </select>
+
+    <insert id="insertCaruCourse" parameterType="CaruCourse" useGeneratedKeys="true" keyProperty="caruId">
+        insert into caru_course
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="CaruCourseId != null">CaruCourseId,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="CaruCourseId != null">#{CaruCourseId},</if>
+        </trim>
+    </insert>
+
+    <update id="updateCaruCourse" parameterType="CaruCourse">
+        update caru_course
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="CaruCourseId != null">CaruCourseId = #{CaruCourseId},</if>
+        </trim>
+        where caru_id = #{caruId}
+    </update>
+
+    <delete id="deleteCaruCourseByCaruId" parameterType="Long">
+        delete from caru_course where caru_id = #{caruId}
+    </delete>
+
+    <delete id="deleteCaruCourseByCaruIds" parameterType="String">
+        delete from caru_course where caru_id in
+        <foreach item="caruId" collection="array" open="(" separator="," close=")">
+            #{caruId}
+        </foreach>
+    </delete>
+</mapper>

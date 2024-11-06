@@ -201,16 +201,18 @@
                 <el-form-item label="课程封面" prop="courseImg">
                     <el-tag v-if="data.form.courseImg">已上传</el-tag>
                     <el-upload
+                        style="width: 100%;"
                         v-else
                         class="upload-demo"
                         drag
                         multiple
                         :http-request="handleUploadImg"
                         :on-success="handleSuccess"
+                        accept="image/*"
                     >
                         <el-icon class="el-icon--upload"><upload-filled /></el-icon>
                         <div class="el-upload__text">
-                            Drop file here or <em>click to upload</em>
+                            将文件拖拽进来 <em>或 点击上传</em>
                         </div>
                         <template #tip>
                             <div class="el-upload__tip">
@@ -244,20 +246,22 @@
                 <el-form-item label="视频链接" prop="videoUrl">
                     <el-tag v-if="data.form.videoUrl">已上传</el-tag>
                     <el-upload
+                        style="width: 100%;"
                         v-else
                         class="upload-demo"
                         drag
                         multiple
+                        accept="video/*"
                         :http-request="handleUpload"
                         :on-success="handleSuccess"
                     >
                         <el-icon class="el-icon--upload"><upload-filled /></el-icon>
                         <div class="el-upload__text">
-                            Drop file here or <em>click to upload</em>
+                            将文件拖拽进来 <em>或 点击上传</em>
                         </div>
                         <template #tip>
                             <div class="el-upload__tip">
-                                上传mp4文件，最大200MB
+                                上传视频文件，最大200MB
                             </div>
                         </template>
                     </el-upload>

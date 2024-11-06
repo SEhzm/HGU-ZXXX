@@ -64,4 +64,8 @@ public interface CourseChaptersMapper {
 
     @Select("select chapter_title from course_chapters where chapter_id = #{chapterId}")
     CourseChapters getChaptersInfoByChapterId(Integer chapterId);
+
+
+    @Select("select course_name from course where course_id=#{courseId}")
+    String getCourseNameById(Integer courseId);
 }

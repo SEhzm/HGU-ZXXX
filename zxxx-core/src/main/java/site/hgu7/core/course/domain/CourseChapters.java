@@ -2,8 +2,12 @@ package site.hgu7.core.course.domain;
 
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.springframework.beans.factory.annotation.Autowired;
 import site.hgu7.common.annotation.Excel;
 import site.hgu7.common.core.domain.BaseEntity;
 
@@ -13,6 +17,9 @@ import site.hgu7.common.core.domain.BaseEntity;
  * @author hzm
  * @date 2024-10-27
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CourseChapters extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -23,6 +30,9 @@ public class CourseChapters extends BaseEntity
     /** 课程id */
     @Excel(name = "课程id")
     private Integer courseId;
+
+    @Excel(name = "课程名")
+    private String courseName;
 
     /** 章节标题 */
     @Excel(name = "章节标题")
@@ -49,79 +59,6 @@ public class CourseChapters extends BaseEntity
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "更新时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date updatedAt;
-
-    public void setChapterId(Integer chapterId) 
-    {
-        this.chapterId = chapterId;
-    }
-
-    public Integer getChapterId() 
-    {
-        return chapterId;
-    }
-    public void setCourseId(Integer courseId) 
-    {
-        this.courseId = courseId;
-    }
-
-    public Integer getCourseId() 
-    {
-        return courseId;
-    }
-    public void setChapterTitle(String chapterTitle) 
-    {
-        this.chapterTitle = chapterTitle;
-    }
-
-    public String getChapterTitle() 
-    {
-        return chapterTitle;
-    }
-    public void setChapterDescription(String chapterDescription) 
-    {
-        this.chapterDescription = chapterDescription;
-    }
-
-    public String getChapterDescription() 
-    {
-        return chapterDescription;
-    }
-    public void setVideoUrl(String videoUrl) 
-    {
-        this.videoUrl = videoUrl;
-    }
-
-    public String getVideoUrl() 
-    {
-        return videoUrl;
-    }
-    public void setPosition(String position) 
-    {
-        this.position = position;
-    }
-
-    public String getPosition() 
-    {
-        return position;
-    }
-    public void setCreatedAt(Date createdAt) 
-    {
-        this.createdAt = createdAt;
-    }
-
-    public Date getCreatedAt() 
-    {
-        return createdAt;
-    }
-    public void setUpdatedAt(Date updatedAt) 
-    {
-        this.updatedAt = updatedAt;
-    }
-
-    public Date getUpdatedAt() 
-    {
-        return updatedAt;
-    }
 
     @Override
     public String toString() {

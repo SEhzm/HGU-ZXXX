@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch" label-width="128px">
       <el-form-item label="精品课的课程id" prop="findCourseId">
         <el-input
           v-model="queryParams.findCourseId"

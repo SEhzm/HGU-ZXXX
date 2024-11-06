@@ -40,7 +40,11 @@ public class CourseChaptersServiceImpl implements ICourseChaptersService
     @Override
     public List<CourseChapters> selectCourseChaptersList(CourseChapters courseChapters)
     {
-        return courseChaptersMapper.selectCourseChaptersList(courseChapters);
+        List<CourseChapters> courseChapters1 = courseChaptersMapper.selectCourseChaptersList(courseChapters);
+        for (CourseChapters chapters : courseChapters1) {
+            chapters.setCourseName(courseChaptersMapper.getCourseNameById(chapters.getCourseId()));
+        }
+        return courseChapters1;
     }
 
     /**

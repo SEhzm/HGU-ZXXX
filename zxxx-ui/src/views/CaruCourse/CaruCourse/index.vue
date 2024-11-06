@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch" label-width="98px">
       <el-form-item label="轮播图课程id" prop="CaruCourseId">
         <el-input
           v-model="queryParams.CaruCourseId"
@@ -60,7 +60,7 @@
     <el-table v-loading="loading" :data="CaruCourseList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="id" align="center" prop="caruId" />
-      <el-table-column label="轮播图课程id" align="center" prop="CaruCourseId" />
+      <el-table-column label="轮播图课程id" align="center" prop="caruCourseId" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
           <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['CaruCourse:CaruCourse:edit']">修改</el-button>
@@ -127,6 +127,7 @@ function getList() {
   loading.value = true;
   listCaruCourse(queryParams.value).then(response => {
     CaruCourseList.value = response.rows;
+      console.log(CaruCourseList)
     total.value = response.total;
     loading.value = false;
   });

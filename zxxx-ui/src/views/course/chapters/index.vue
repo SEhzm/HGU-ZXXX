@@ -9,6 +9,14 @@
                     @keyup.enter="handleQuery"
                 />
             </el-form-item>
+            <el-form-item label="课程名" prop="courseName">
+                <el-input
+                    v-model="queryParams.courseName"
+                    placeholder="请输入课程名"
+                    clearable
+                    @keyup.enter="handleQuery"
+                />
+            </el-form-item>
             <el-form-item label="章节标题" prop="chapterTitle">
                 <el-input
                     v-model="queryParams.chapterTitle"
@@ -111,13 +119,13 @@
 
         <el-table v-loading="loading" :data="chaptersList" @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="55" align="center"/>
-            <el-table-column label="章节id" align="center" prop="chapterId"/>
-            <el-table-column label="课程id" align="center" prop="courseId"/>
-            <el-table-column label="章节标题" align="center" prop="chapterTitle"/>
-            <el-table-column label="章节描述" align="center" prop="chapterDescription" show-overflow-tooltip/>
+            <el-table-column label="章节id" align="center" prop="chapterId" min-width="18"/>
+            <el-table-column label="课程id" align="center" prop="courseId" min-width="18"/>
+            <el-table-column label="课程名称" align="center" prop="courseName"  min-width="28"/>
+            <el-table-column label="章节标题" align="center" prop="chapterTitle" />
+            <el-table-column label="章节描述" align="center" prop="chapterDescription" show-overflow-tooltip min-width="88"/>
             <el-table-column label="视频链接" align="center" prop="videoUrl" show-overflow-tooltip/>
-
-            <el-table-column label="章节顺序" align="center" prop="position"/>
+            <el-table-column label="章节顺序" align="center" prop="position" min-width="20"/>
             <el-table-column label="创建时间" align="center" prop="createdAt" width="180">
                 <template #default="scope">
                     <span>{{ parseTime(scope.row.createdAt, '{y}-{m}-{d}') }}</span>
@@ -164,6 +172,7 @@
                 <el-form-item label="视频文件" prop="videoUrl">
                     <el-tag v-if="data.form.videoUrl">已上传</el-tag>
                     <el-upload
+                        style="width: 100%;"
                         v-else
                         class="upload-demo"
                         drag
@@ -171,14 +180,15 @@
                         multiple
                         :http-request="handleUpload"
                         :on-success="handleSuccess"
+                        accept="video/*"
                     >
                         <el-icon class="el-icon--upload"><upload-filled /></el-icon>
                         <div class="el-upload__text">
-                            Drop file here or <em>click to upload</em>
+                            将文件拖拽进来 <em>或 点击上传</em>
                         </div>
                         <template #tip>
                             <div class="el-upload__tip">
-                                上传mp4文件，最大200MB
+                                上传视频文件，最大200MB
                             </div>
                         </template>
                     </el-upload>
@@ -224,6 +234,7 @@ const data = reactive({
         pageNum: 1,
         pageSize: 10,
         courseId: null,
+        courseName: null,
         chapterTitle: null,
         chapterDescription: null,
         videoUrl: null,

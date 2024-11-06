@@ -1,15 +1,15 @@
 package site.hgu7.core.course.domain;
 
-import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.springframework.beans.factory.annotation.Autowired;
 import site.hgu7.common.annotation.Excel;
 import site.hgu7.common.core.domain.BaseEntity;
+
+import java.util.Date;
 
 /**
  * course_chapters对象 course_chapters

@@ -1,8 +1,9 @@
 package site.hgu7.common.core.text;
 
+import site.hgu7.common.utils.StringUtils;
+
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import site.hgu7.common.utils.StringUtils;
 
 /**
  * 字符集工具类

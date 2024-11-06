@@ -1,11 +1,12 @@
 package site.hgu7.RecommendCourse.service.impl;
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import site.hgu7.RecommendCourse.mapper.RecommendCourseMapper;
 import site.hgu7.RecommendCourse.domain.RecommendCourse;
+import site.hgu7.RecommendCourse.mapper.RecommendCourseMapper;
 import site.hgu7.RecommendCourse.service.IRecommendCourseService;
+
+import java.util.List;
 
 /**
  * 首页推荐课的课程idService业务层处理

@@ -1,7 +1,8 @@
-import { createWebHashHistory, createRouter } from 'vue-router'
+import {createRouter, createWebHashHistory} from 'vue-router'
 /* Layout */
 import Layout from '@/layout'
-import { getToken } from '@/utils/auth';
+import {getToken} from '@/utils/auth';
+
 /**
  * Note: 路由配置项
  *

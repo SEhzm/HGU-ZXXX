@@ -1,14 +1,15 @@
 package site.hgu7.common.core.domain.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import site.hgu7.common.core.domain.BaseEntity;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import site.hgu7.common.core.domain.BaseEntity;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 部门表 sys_dept

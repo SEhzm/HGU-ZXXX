@@ -1,7 +1,8 @@
 package site.hgu7.FineCourse.service;
 
-import java.util.List;
 import site.hgu7.FineCourse.domain.FineCourse;
+
+import java.util.List;
 
 /**
  * 精品课的课程idService接口

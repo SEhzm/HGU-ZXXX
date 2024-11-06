@@ -1,11 +1,12 @@
 package site.hgu7.FineCourse.service.impl;
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import site.hgu7.FineCourse.mapper.FineCourseMapper;
 import site.hgu7.FineCourse.domain.FineCourse;
+import site.hgu7.FineCourse.mapper.FineCourseMapper;
 import site.hgu7.FineCourse.service.IFineCourseService;
+
+import java.util.List;
 
 /**
  * 精品课的课程idService业务层处理

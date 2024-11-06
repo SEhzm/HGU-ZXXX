@@ -166,7 +166,13 @@
 </template>
 
 <script setup name="Enrollments">
-import { listEnrollments, getEnrollments, delEnrollments,myListEnrollments, addEnrollments, updateEnrollments } from "@/api/course/enrollments";
+import {
+    addEnrollments,
+    delEnrollments,
+    getEnrollments,
+    myListEnrollments,
+    updateEnrollments
+} from "@/api/course/enrollments";
 
 
 const { proxy } = getCurrentInstance();

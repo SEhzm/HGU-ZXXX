@@ -1,9 +1,5 @@
 package site.hgu7.web.controller.common;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +16,11 @@ import site.hgu7.common.utils.StringUtils;
 import site.hgu7.common.utils.file.FileUploadUtils;
 import site.hgu7.common.utils.file.FileUtils;
 import site.hgu7.framework.config.ServerConfig;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 通用请求处理

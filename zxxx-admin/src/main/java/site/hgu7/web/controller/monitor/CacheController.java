@@ -1,26 +1,16 @@
 package site.hgu7.web.controller.monitor;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-import java.util.TreeSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import site.hgu7.common.constant.CacheConstants;
 import site.hgu7.common.core.domain.AjaxResult;
 import site.hgu7.common.utils.StringUtils;
 import site.hgu7.system.domain.SysCache;
+
+import java.util.*;
 
 /**
  * 缓存监控

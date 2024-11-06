@@ -1,17 +1,13 @@
 package site.hgu7.core.course.service.impl;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import site.hgu7.common.utils.SecurityUtils;
-import site.hgu7.core.course.mapper.CourseEnrollmentsMapper;
 import site.hgu7.core.course.domain.CourseEnrollments;
-import site.hgu7.core.course.domain.Course;
+import site.hgu7.core.course.mapper.CourseEnrollmentsMapper;
 import site.hgu7.core.course.service.ICourseEnrollmentsService;
+
+import java.util.List;
 
 /**
  * course_enrollmentsService业务层处理

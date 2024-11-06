@@ -5,20 +5,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import site.hgu7.common.core.controller.BaseController;
-import site.hgu7.common.core.domain.R;
-import site.hgu7.common.core.domain.entity.SysUser;
 import site.hgu7.common.core.page.TableDataInfo;
 import site.hgu7.common.utils.SecurityUtils;
 import site.hgu7.core.course.domain.CourseEnrollments;
 import site.hgu7.core.course.service.ICourseEnrollmentsService;
 import site.hgu7.core.notice.domain.NoticeVo;
 import site.hgu7.core.notice.service.INoticeService;
-import site.hgu7.system.service.ISysUserService;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static site.hgu7.common.utils.PageUtils.startPage;
 
 @RestController
 @RequestMapping("/userNotice")

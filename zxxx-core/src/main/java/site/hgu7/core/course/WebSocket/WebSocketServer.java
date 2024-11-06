@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;

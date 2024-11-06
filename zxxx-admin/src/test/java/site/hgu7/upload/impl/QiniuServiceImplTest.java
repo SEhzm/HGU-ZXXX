@@ -1,13 +1,5 @@
 package site.hgu7.upload.impl;
 
-import com.qiniu.common.QiniuException;
-import org.junit.jupiter.api.Test;
-
-import javax.annotation.Resource;
-import java.io.File;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 class QiniuServiceImplTest {
 //    @Resource
 //    private IQiniuService qiniuService;

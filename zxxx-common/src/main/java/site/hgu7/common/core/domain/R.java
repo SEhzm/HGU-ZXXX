@@ -1,7 +1,8 @@
 package site.hgu7.common.core.domain;
 
-import java.io.Serializable;
 import site.hgu7.common.constant.HttpStatus;
+
+import java.io.Serializable;
 
 /**
  * 响应信息主体

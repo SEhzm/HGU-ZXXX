@@ -213,8 +213,10 @@
 </template>
 
 <script setup name="Chapters">
-import {listChapters, getChapters, delChapters, addChapters, updateChapters} from "@/api/course/chapters";
+import {addChapters, delChapters, getChapters, listChapters, updateChapters} from "@/api/course/chapters";
 import {ElMessage} from 'element-plus'
+//上传
+import axios from 'axios'
 
 const {proxy} = getCurrentInstance();
 
@@ -246,8 +248,6 @@ const data = reactive({
 });
 
 const {queryParams, form, rules} = toRefs(data);
-//上传
-import axios from 'axios'
 
 const baseUrl = 'https://dgq63136.icu:9800'  // 动态读取环境变量
 

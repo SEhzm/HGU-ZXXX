@@ -1,8 +1,8 @@
 <script setup lang="ts">
-  import { VideoPlayer } from '@/components/VideoPlayer'
-  import { ElOverlay } from 'element-plus'
-  import { ref, nextTick } from 'vue'
-  // import { Icon } from '@/components/Icon'
+import {VideoPlayer} from '@/components/VideoPlayer'
+import {ElOverlay} from 'element-plus'
+import {nextTick, ref} from 'vue'
+// import { Icon } from '@/components/Icon'
 
   const props = defineProps({
     show: {

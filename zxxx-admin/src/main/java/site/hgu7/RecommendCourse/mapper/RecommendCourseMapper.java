@@ -1,7 +1,8 @@
 package site.hgu7.RecommendCourse.mapper;
 
-import java.util.List;
 import site.hgu7.RecommendCourse.domain.RecommendCourse;
+
+import java.util.List;
 
 /**
  * 首页推荐课的课程idMapper接口

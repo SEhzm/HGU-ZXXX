@@ -1,9 +1,10 @@
 package site.hgu7.common.core.domain;
 
-import java.util.HashMap;
-import java.util.Objects;
 import site.hgu7.common.constant.HttpStatus;
 import site.hgu7.common.utils.StringUtils;
+
+import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * 操作消息提醒

@@ -95,7 +95,13 @@
 </template>
 
 <script setup name="FineCourse">
-import { listFineCourse, getFineCourse, delFineCourse, addFineCourse, updateFineCourse } from "@/api/FineCourse/FineCourse";
+import {
+    addFineCourse,
+    delFineCourse,
+    getFineCourse,
+    listFineCourse,
+    updateFineCourse
+} from "@/api/FineCourse/FineCourse";
 
 const { proxy } = getCurrentInstance();
 

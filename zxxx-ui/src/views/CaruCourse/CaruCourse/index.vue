@@ -95,7 +95,13 @@
 </template>
 
 <script setup name="CaruCourse">
-import { listCaruCourse, getCaruCourse, delCaruCourse, addCaruCourse, updateCaruCourse } from "@/api/CaruCourse/CaruCourse";
+import {
+    addCaruCourse,
+    delCaruCourse,
+    getCaruCourse,
+    listCaruCourse,
+    updateCaruCourse
+} from "@/api/CaruCourse/CaruCourse";
 
 const { proxy } = getCurrentInstance();
 

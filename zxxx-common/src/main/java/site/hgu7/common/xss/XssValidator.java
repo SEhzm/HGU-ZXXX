@@ -1,6 +1,7 @@
 package site.hgu7.common.xss;
 
 import site.hgu7.common.utils.StringUtils;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.regex.Matcher;

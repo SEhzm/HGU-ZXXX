@@ -1,11 +1,10 @@
 package site.hgu7.core.course.mapper;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
-import site.hgu7.core.course.domain.Course;
 import site.hgu7.core.course.domain.CourseEnrollments;
+
+import java.util.List;
 
 /**
  * course_enrollmentsMapper接口

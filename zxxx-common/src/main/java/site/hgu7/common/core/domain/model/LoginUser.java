@@ -1,9 +1,10 @@
 package site.hgu7.common.core.domain.model;
 
 import com.alibaba.fastjson2.annotation.JSONField;
-import site.hgu7.common.core.domain.entity.SysUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import site.hgu7.common.core.domain.entity.SysUser;
+
 import java.util.Collection;
 import java.util.Set;
 

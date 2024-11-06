@@ -36,7 +36,7 @@
 </template>
 
 <script setup>
-import {ref, onMounted, reactive, toRefs} from 'vue';
+import {onMounted, reactive, ref, toRefs} from 'vue';
 import {listNotice} from '@/api/notice/notice.js';
 import {parseTime} from '../../utils/ruoyi.js';
 

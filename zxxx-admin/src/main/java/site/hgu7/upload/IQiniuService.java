@@ -1,7 +1,6 @@
 package site.hgu7.upload;
 
 import com.qiniu.common.QiniuException;
-import org.springframework.context.annotation.Bean;
 
 import java.io.File;
 import java.io.InputStream;

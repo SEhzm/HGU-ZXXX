@@ -1,7 +1,8 @@
 package site.hgu7.core.course.service;
 
-import java.util.List;
 import site.hgu7.core.course.domain.CourseChapters;
+
+import java.util.List;
 
 /**
  * course_chaptersService接口

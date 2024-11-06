@@ -1,8 +1,5 @@
 package site.hgu7.common.core.domain.entity;
 
-import java.util.Date;
-import java.util.List;
-import javax.validation.constraints.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import site.hgu7.common.annotation.Excel;
@@ -11,6 +8,12 @@ import site.hgu7.common.annotation.Excel.Type;
 import site.hgu7.common.annotation.Excels;
 import site.hgu7.common.core.domain.BaseEntity;
 import site.hgu7.common.xss.Xss;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 用户对象 sys_user

@@ -80,11 +80,10 @@
 
 <script setup>
 
-import {ref, reactive, onMounted} from 'vue';
-import {getCourse} from '@/api/course/course';
+import {onMounted, reactive, ref} from 'vue';
+import {listCourse} from '@/api/course/course';
 import {getHomeCourse} from "../api/course/course.js";
 import {useRouter} from "vue-router";
-import {listCourse} from "@/api/course/course";
 
 const dialogTableVisible = ref(false)
 const router = useRouter();

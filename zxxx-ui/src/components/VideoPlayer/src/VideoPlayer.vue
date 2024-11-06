@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import Player from "xgplayer";
-import { ref, unref, onMounted, watch, onBeforeUnmount, nextTick } from "vue";
+import {nextTick, onBeforeUnmount, onMounted, ref, unref, watch} from "vue";
 import "xgplayer/dist/index.min.css";
 
 const props = defineProps({

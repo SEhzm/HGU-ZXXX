@@ -1,7 +1,8 @@
 package site.hgu7.CaruCourse.service;
 
-import java.util.List;
 import site.hgu7.CaruCourse.domain.CaruCourse;
+
+import java.util.List;
 
 /**
  * 首页轮播图展示的课程idService接口

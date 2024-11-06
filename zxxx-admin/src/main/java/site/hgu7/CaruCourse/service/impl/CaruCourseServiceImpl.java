@@ -1,11 +1,12 @@
 package site.hgu7.CaruCourse.service.impl;
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import site.hgu7.CaruCourse.mapper.CaruCourseMapper;
 import site.hgu7.CaruCourse.domain.CaruCourse;
+import site.hgu7.CaruCourse.mapper.CaruCourseMapper;
 import site.hgu7.CaruCourse.service.ICaruCourseService;
+
+import java.util.List;
 
 /**
  * 首页轮播图展示的课程idService业务层处理

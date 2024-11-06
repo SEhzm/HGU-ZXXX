@@ -282,7 +282,9 @@
 </template>
 
 <script setup name="Course">
-import {listCourse, addChapters ,getCourse, delCourse, addCourse, updateCourse} from "@/api/course/course";
+import {addChapters, addCourse, delCourse, getCourse, listCourse, updateCourse} from "@/api/course/course";
+//上传
+import axios from 'axios'
 
 const {proxy} = getCurrentInstance();
 const {course_category} = proxy.useDict('course_category');
@@ -321,9 +323,6 @@ const data = reactive({
 });
 
 const {queryParams, form, rules} = toRefs(data);
-
-//上传
-import axios from 'axios'
 
 const baseUrl = 'https://dgq63136.icu:9800'  // 动态读取环境变量
 

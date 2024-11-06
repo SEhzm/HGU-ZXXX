@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-import { getToken } from "@/utils/auth";
+import {getToken} from "@/utils/auth";
 
 const props = defineProps({
   modelValue: [String, Object, Array],

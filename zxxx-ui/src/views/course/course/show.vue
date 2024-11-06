@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import {ref, onMounted, watch, reactive} from 'vue';
+import {onMounted, ref} from 'vue';
 import {useRoute, useRouter} from "vue-router";
 import {getCourse} from '@/api/course/course';
 import {getChaptersIdByCourseId, getCourseStudyTotal} from '@/api/course/enrollments';

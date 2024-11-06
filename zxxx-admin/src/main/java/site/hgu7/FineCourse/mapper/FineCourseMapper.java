@@ -1,7 +1,8 @@
 package site.hgu7.FineCourse.mapper;
 
-import java.util.List;
 import site.hgu7.FineCourse.domain.FineCourse;
+
+import java.util.List;
 
 /**
  * 精品课的课程idMapper接口

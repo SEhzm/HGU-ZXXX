@@ -95,7 +95,13 @@
 </template>
 
 <script setup name="RecommendCourse">
-import { listRecommendCourse, getRecommendCourse, delRecommendCourse, addRecommendCourse, updateRecommendCourse } from "@/api/RecommendCourse/RecommendCourse";
+import {
+    addRecommendCourse,
+    delRecommendCourse,
+    getRecommendCourse,
+    listRecommendCourse,
+    updateRecommendCourse
+} from "@/api/RecommendCourse/RecommendCourse";
 
 const { proxy } = getCurrentInstance();
 

@@ -1,7 +1,5 @@
 package site.hgu7.web.controller.system;
 
-import java.util.List;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +16,9 @@ import site.hgu7.framework.web.service.SysLoginService;
 import site.hgu7.framework.web.service.SysPermissionService;
 import site.hgu7.framework.web.service.TokenService;
 import site.hgu7.system.service.ISysMenuService;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * 登录验证

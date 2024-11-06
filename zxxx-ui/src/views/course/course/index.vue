@@ -213,7 +213,7 @@
 </template>
 
 <script setup name="Course">
-import {listCourse, getCourse, delCourse,selectCourse, addCourse, updateCourse} from "@/api/course/course";
+import {addCourse, delCourse, getCourse, listCourse, selectCourse, updateCourse} from "@/api/course/course";
 
 const {proxy} = getCurrentInstance();
 const {course_category} = proxy.useDict('course_category');

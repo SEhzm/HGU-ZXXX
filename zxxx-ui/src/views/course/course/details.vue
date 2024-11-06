@@ -21,7 +21,7 @@
 
 <script setup>
 import {myListEnrollments} from "@/api/course/enrollments";
-import {ref, reactive} from 'vue';
+import {reactive, ref} from 'vue';
 import {useRouter} from "vue-router";
 
 const router = useRouter();

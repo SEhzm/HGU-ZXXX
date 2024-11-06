@@ -113,10 +113,11 @@
 
 <script setup lang="ts">
 import navbar from '../../layout/components/Navbar.vue'
-import {ref, reactive, onMounted} from 'vue';
-import {getCourse,getHomeCourse} from '@/api/course/course';
+import {onMounted, reactive} from 'vue';
+import {getHomeCourse} from '@/api/course/course';
 import {useRouter} from "vue-router";
-import { ElMessage, ElMessageBox } from 'element-plus'
+import {ElMessage, ElMessageBox} from 'element-plus'
+
 const router = useRouter();
 const homeCourseInfo = reactive({
     caruCourseId: [],

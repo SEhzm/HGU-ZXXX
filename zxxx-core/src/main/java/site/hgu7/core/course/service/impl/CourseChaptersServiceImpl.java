@@ -1,11 +1,12 @@
 package site.hgu7.core.course.service.impl;
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import site.hgu7.core.course.mapper.CourseChaptersMapper;
 import site.hgu7.core.course.domain.CourseChapters;
+import site.hgu7.core.course.mapper.CourseChaptersMapper;
 import site.hgu7.core.course.service.ICourseChaptersService;
+
+import java.util.List;
 
 /**
  * course_chaptersService业务层处理

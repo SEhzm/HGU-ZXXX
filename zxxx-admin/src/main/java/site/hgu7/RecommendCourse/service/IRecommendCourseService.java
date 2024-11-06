@@ -1,7 +1,8 @@
 package site.hgu7.RecommendCourse.service;
 
-import java.util.List;
 import site.hgu7.RecommendCourse.domain.RecommendCourse;
+
+import java.util.List;
 
 /**
  * 首页推荐课的课程idService接口

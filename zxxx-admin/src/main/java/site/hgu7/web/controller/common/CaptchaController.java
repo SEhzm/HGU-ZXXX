@@ -1,16 +1,10 @@
 package site.hgu7.web.controller.common;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-import javax.annotation.Resource;
-import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletResponse;
+import com.google.code.kaptcha.Producer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.FastByteArrayOutputStream;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.google.code.kaptcha.Producer;
 import site.hgu7.common.config.RuoYiConfig;
 import site.hgu7.common.constant.CacheConstants;
 import site.hgu7.common.constant.Constants;
@@ -19,6 +13,13 @@ import site.hgu7.common.core.redis.RedisCache;
 import site.hgu7.common.utils.sign.Base64;
 import site.hgu7.common.utils.uuid.IdUtils;
 import site.hgu7.system.service.ISysConfigService;
+
+import javax.annotation.Resource;
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 验证码操作处理

@@ -177,7 +177,7 @@
 </template>
 
 <script setup name="Notice">
-import { listNotice, getNotice, delNotice, addNotice, updateNotice } from "@/api/system/notice";
+import {addNotice, delNotice, getNotice, listNotice, updateNotice} from "@/api/system/notice";
 
 const { proxy } = getCurrentInstance();
 const { sys_notice_status, sys_notice_type,sys_user_role } = proxy.useDict("sys_notice_status", "sys_notice_type","sys_user_role");

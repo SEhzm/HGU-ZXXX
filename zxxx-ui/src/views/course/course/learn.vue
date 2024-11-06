@@ -40,12 +40,12 @@
 </template>
 
 <script setup lang="ts">
-import {ref, onMounted, watch, reactive, toRefs, computed,onBeforeUnmount} from 'vue';
+import {onBeforeUnmount, onMounted, reactive, ref, toRefs, watch} from 'vue';
 import {useRoute, useRouter} from "vue-router";
 import {getCourse} from '@/api/course/course';
-import {listChapters, getChapters} from "@/api/course/chapters";
+import {getChapters, listChapters} from "@/api/course/chapters";
 import {updateLearningProgress} from "@/api/course/enrollments";
-import { ElMessage, ElMessageBox } from 'element-plus';
+import {ElMessage, ElMessageBox} from 'element-plus';
 // 引入西瓜播放器
 import "xgplayer/dist/index.min.css";
 import Player from 'xgplayer';

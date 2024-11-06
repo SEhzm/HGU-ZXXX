@@ -1,17 +1,9 @@
 package site.hgu7.web.controller.system;
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import site.hgu7.common.annotation.Log;
 import site.hgu7.common.core.controller.BaseController;
 import site.hgu7.common.core.domain.AjaxResult;
@@ -19,6 +11,8 @@ import site.hgu7.common.core.page.TableDataInfo;
 import site.hgu7.common.enums.BusinessType;
 import site.hgu7.system.domain.SysNotice;
 import site.hgu7.system.service.ISysNoticeService;
+
+import java.util.List;
 
 /**
  * 公告 信息操作处理

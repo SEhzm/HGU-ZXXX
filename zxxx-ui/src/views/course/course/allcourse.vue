@@ -325,7 +325,7 @@ const {queryParams, form, rules} = toRefs(data);
 //上传
 import axios from 'axios'
 
-const baseUrl = 'http://localhost:9800'  // 动态读取环境变量
+const baseUrl = import.meta.env.SERVER_ADDRESS  // 动态读取环境变量
 
 const fileList = ref([])
 // 自定义上传函数

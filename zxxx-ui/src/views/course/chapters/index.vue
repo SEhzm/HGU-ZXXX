@@ -116,6 +116,7 @@
             <el-table-column label="章节标题" align="center" prop="chapterTitle"/>
             <el-table-column label="章节描述" align="center" prop="chapterDescription" show-overflow-tooltip/>
             <el-table-column label="视频链接" align="center" prop="videoUrl" show-overflow-tooltip/>
+
             <el-table-column label="章节顺序" align="center" prop="position"/>
             <el-table-column label="创建时间" align="center" prop="createdAt" width="180">
                 <template #default="scope">
@@ -158,6 +159,24 @@
                 </el-form-item>
                 <el-form-item label="章节描述" prop="chapterDescription">
                     <el-input v-model="form.chapterDescription" placeholder="请输入章节描述"/>
+                </el-form-item>
+
+                <el-form-item label="视频链接" prop="videoUrl">
+                    <el-upload
+                        action="/upload"
+                        :on-success="handleSuccess"
+                        :on-error="handleError"
+                        :before-upload="beforeUpload"
+                        multiple
+                        drag
+                        :limit="3"
+                        :on-exceed="handleExceed"
+                        :file-list="fileList">
+                        <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+                        <div class="el-upload__text">
+                            Drop file here or <em>click to upload</em>
+                        </div>
+                    </el-upload>
                 </el-form-item>
                 <el-form-item label="视频链接" prop="videoUrl">
                     <el-input v-model="form.videoUrl" placeholder="请输入视频链接"/>
@@ -210,6 +229,32 @@ const data = reactive({
 });
 
 const {queryParams, form, rules} = toRefs(data);
+//上传
+const fileList = ref([]);
+
+const handleSuccess = (response, file, fileList) => {
+    console.log('上传成功', response);
+};
+
+const handleError = (err, file, fileList) => {
+    console.error('上传失败', err);
+};
+
+const beforeUpload = (file) => {
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+        ElMessage.error('上传文件大小不能超过 2MB!');
+    }
+    return isLt2M;
+};
+
+const handleExceed = (files, fileList) => {
+    ElMessage.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+};
+
+
+
+
 
 /** 查询course_chapters列表 */
 function getList() {

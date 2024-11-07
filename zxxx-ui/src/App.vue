@@ -1,10 +1,13 @@
 <template>
-  <router-view :key="$route.fullPath" />
+    <router-view :key="$route.fullPath" >
+    </router-view>
+    <footer/>
 </template>
 
 <script setup>
 import useSettingsStore from '@/store/modules/settings'
 import {handleThemeStyle} from '@/utils/theme'
+import footer from '@/components/footer.vue'
 
 onMounted(() => {
   nextTick(() => {
@@ -13,3 +16,7 @@ onMounted(() => {
   })
 })
 </script>
+
+<style scoped>
+
+</style>

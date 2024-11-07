@@ -4,11 +4,15 @@
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" v-if="!settingsStore.topNav" />
     <top-nav id="topmenu-container" class="topmenu-container" v-if="settingsStore.topNav" />
 
+
     <div class="right-menu">
+
+        <p style="margin-right: 100px"><a href="https://github.com/SEhzm"><img src="https://pic.imgdb.cn/item/672c6248d29ded1a8cd9567c.png" style="width: 27px ;" alt=""> GitHub : SEhzm </a></p>
       <template v-if="appStore.device !== 'mobile'">
         <header-search id="header-search" class="right-menu-item" />
 
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
+
 
         <el-tooltip content="布局大小" effect="dark" placement="bottom">
           <size-select id="size-select" class="right-menu-item hover-effect" />

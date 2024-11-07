@@ -50,7 +50,7 @@
                 />
             </el-form-item>
             <el-form-item label="课程分类" prop="courseCategory">
-                <el-select v-model="queryParams.courseCategory" placeholder="请选择课程分类" clearable>
+                <el-select v-model="queryParams.courseCategory" placeholder="请选择课程分类" clearable style="width: 195px;">
                     <el-option
                         v-for="dict in course_category"
                         :key="dict.value"

@@ -324,49 +324,49 @@ const data = reactive({
 
 const {queryParams, form, rules} = toRefs(data);
 
-const baseUrl = 'https://dgq63136.icu:9800'  // 动态读取环境变量
+    const baseUrl = 'https://dgq63136.icu:9800'  // 动态读取环境变量
 
-const fileList = ref([])
-// 自定义上传函数
-const handleUpload = async (options) => {
-    const formData = new FormData()
-    formData.append('file', options.file)
+    const fileList = ref([])
+    // 自定义上传函数
+    const handleUpload = async (options) => {
+        const formData = new FormData()
+        formData.append('file', options.file)
 
-    try {
-        const response = await axios.post(`${baseUrl}/file/upload`, formData, {
-            headers: {'Content-Type': 'multipart/form-data'}
-        }).then(res => {
-            data.form.videoUrl = res.data
-            console.log(data.form.videoUrl)
-        })
-        options.onSuccess && options.onSuccess(response.data)
-    } catch (error) {
-        options.onError && options.onError(error)
+        try {
+            const response = await axios.post(`${baseUrl}/file/upload`, formData, {
+                headers: {'Content-Type': 'multipart/form-data'}
+            }).then(res => {
+                data.form.videoUrl = res.data
+                console.log(data.form.videoUrl)
+            })
+            options.onSuccess && options.onSuccess(response.data)
+        } catch (error) {
+            options.onError && options.onError(error)
+        }
     }
-}
-const handleUploadImg = async (options) => {
-    const formData = new FormData()
-    formData.append('file', options.file)
+    const handleUploadImg = async (options) => {
+        const formData = new FormData()
+        formData.append('file', options.file)
 
-    try {
-        const response = await axios.post(`${baseUrl}/file/upload`, formData, {
-            headers: {'Content-Type': 'multipart/form-data'}
-        }).then(res => {
-            data.form.courseImg = res.data
-            console.log(data.form.courseImg)
-        })
-        options.onSuccess && options.onSuccess(response.data)
-    } catch (error) {
-        options.onError && options.onError(error)
+        try {
+            const response = await axios.post(`${baseUrl}/file/upload`, formData, {
+                headers: {'Content-Type': 'multipart/form-data'}
+            }).then(res => {
+                data.form.courseImg = res.data
+                console.log(data.form.courseImg)
+            })
+            options.onSuccess && options.onSuccess(response.data)
+        } catch (error) {
+            options.onError && options.onError(error)
+        }
     }
-}
-const handleSuccess = (response) => {
-    console.log("上传成功"+response)
-    ElMessage({
-        message: '上传成功',
-        type: 'success',
-    })
-}
+    const handleSuccess = (response) => {
+        console.log("上传成功"+response)
+        ElMessage({
+            message: '上传成功',
+            type: 'success',
+        })
+    }
 
 
 
